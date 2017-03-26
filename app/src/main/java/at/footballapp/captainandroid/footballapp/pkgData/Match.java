@@ -12,6 +12,9 @@ public class Match {
     private Date date = null;
     private int goalsA;
     private int goalsB;
-    private ArrayList<Player> 
+    private ArrayList<Player> teamA = null;
+    private ArrayList<Player> teamB = null;
+
+
 
 }
