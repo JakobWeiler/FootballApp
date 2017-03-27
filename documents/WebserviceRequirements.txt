@@ -1,0 +1,13 @@
+Add:
+-addPlayer(name, password, position, isAdmin): Adds a player to the database with the next available id
+-addMatch(date, goalsA, goalsB): Adds a match to the database with the next available id
+-addStatistic(gDefault, gHead, gHeadSnow, gNutmeg, gOwn, gPenalty, position): Adds a statistic to the database with the next available id
+
+Getter:
+-getAllPlayers(): Returns a collection of all players
+-getAllMatches(): Returns a collection of all matches
+-getMatches(playerId): Returns a collection of all matches in which the delivered player took part
+-getAllStatistics(matchId): Returns a collection of all statistics
+-getStatistics(matchId): Returns a collection of all statistics of the delivered match
+-getStatistic(playerId, matchId): Returns the statistic of the delivered player and match
+
