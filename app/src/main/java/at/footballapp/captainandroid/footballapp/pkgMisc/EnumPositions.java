@@ -1,7 +1,9 @@
 package at.footballapp.captainandroid.footballapp.pkgMisc;
 
-/**
- * Created by Pascal on 23.03.2017.
+/*
+ * Auhtor: Pascal
+ * Date: 24.03.2017
+ *
  * This is an enumeration of all the positions a player can occupy.
  */
 

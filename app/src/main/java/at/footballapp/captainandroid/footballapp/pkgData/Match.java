@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Pascal on 23.03.2017.
+ * Auhtor: Pascal
+ * Date: 23.03.2017
  */
 
 public class Match {
@@ -14,7 +15,4 @@ public class Match {
     private int goalsB;
     private ArrayList<Player> teamA = null;
     private ArrayList<Player> teamB = null;
-
-
-
 }
