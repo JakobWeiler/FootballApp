@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import at.footballapp.captainandroid.footballapp.pkgMisc.EnumPositions;
 
 /**
- * Created by Pascal on 23.03.2017.
+ * Auhtor: Pascal
+ * Date: 23.03.2017
  */
 
 public class Player {

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Pascal on 24.03.2017.
+ * Auhtor: Pascal
+ * Date: 24.03.2017
  */
 
 public class Database {
