@@ -2,7 +2,7 @@ Add:
 -addPlayer(name, password, position, isAdmin): Adds a player to the database with the next available id
 -addMatch(date, goalsA, goalsB): Adds a match to the database with the next available id
 -addStatistic(gDefault, gHead, gHeadSnow, gNutmeg, gOwn, gPenalty, position): Adds a statistic to the database with the next available id
--addPosition(positionName): Adds a position to the database with the next available id
+-addPosition(positionName): Adds a position to the database
 -addOccupation(playerId, positionName): Adds an occupation to the database with the delivered ids
 -addParticipation(playerId, matchId, statisticId, team): Adds a participation to the database with the delivered values
 
