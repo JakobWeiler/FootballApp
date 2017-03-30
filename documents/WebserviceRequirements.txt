@@ -20,6 +20,7 @@ Getter:
 -getStatistic(playerId, matchId): Returns the statistic of the delivered player and match
 
 Setter:
+-setName(id, name): Sets the name of the player with the delivered id
 -setPassword(id, password): Sets the password of the player with the delivered id
 -setIsAdmin(id, isAdmin): Sets the isAdmin flag of the player with the delivered id
 -setTeam(playerId, matchId, team): Sets the team of the participation with the delivered ids
