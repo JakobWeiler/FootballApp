@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FootballApp</string>
+    <string name="Remove">Remove</string>
+    <string name="Score1">Score Team 1:</string>
+    <string name="Score2">Score Team 2:</string>
+    <string name="Edit">Edit Team</string>
+    <string name="Save">Save</string>
+    <string name="Random">Random Teams</string>
 </resources>
