@@ -9,17 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pkgGUI.LoginActivity">
+        <activity android:name=".pkgMisc.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pkgGUI.StatisticActivity" />
-        <activity android:name=".pkgGUI.MatchActivity" />
-        <activity android:name=".pkgGUI.MainActivity" />
-        <activity android:name=".pkgGUI.ProfileActivity" />
+        <activity android:name=".pkgGUI.RemovePlayerGUI" />
     </application>
 
 </manifest>
