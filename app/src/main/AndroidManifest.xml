@@ -17,6 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".pkgGUI.RemovePlayerGUI" />
+        <activity android:name=".pkgGUI.RemoveMatchActivity" />
+        <activity android:name=".pkgGUI.RemovePlayerActivity" />
+        <activity android:name=".pkgGUI.UpdateMatchActivity" />
+        <activity android:name=".pkgGUI.EditTeamActivity"></activity>
     </application>
 
 </manifest>
