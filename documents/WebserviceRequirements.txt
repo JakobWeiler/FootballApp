@@ -7,7 +7,6 @@ Add:
 -addParticipation(playerId, matchId, statisticId, team): Adds a participation to the database with the delivered values
 
 Remove:
--removePosition(positionName): Removes the delivered position
 -removeOccupation(playerId, positionName): Removes the occupation with the delivered ids
 -removePlayer(id): Removes the player with the delivered id
 
@@ -16,15 +15,13 @@ Getter:
 -getPlayer(name, password): Returns a player with the delivered name and password
 -getAllMatches(): Returns a collection of all matches
 -getMatches(playerId): Returns a collection of all matches in which the delivered player took part
--getAllStatistics(matchId): Returns a collection of all statistics
+-getAllStatistics(matchId): Returns a collection of all statistics concerning the given match.
 -getStatistics(matchId): Returns a collection of all statistics of the delivered match
 -getStatistic(playerId, matchId): Returns the statistic of the delivered player and match
 
 Setter:
--setName(id, name): Sets the name of the player with the delivered id
--setPassword(id, password): Sets the password of the player with the delivered id
--setIsAdmin(id, isAdmin): Sets the isAdmin flag of the player with the delivered id
--addPlayerStatistic(id, wins, tied, losses, goalDifference): Adds the values of the delivered fields to the existing field values of wins, tied, losses and goalDifference
+-updatePlayerProperties(id, name, password, isAdmin): Updates the properties of the concerned player.
+-updatePlayerStatistic(id, wins, tied, losses, goalDifference): Adds the values of the delivered fields to the existing field values of wins, tied, losses and goalDifference
 -setTeam(playerId, matchId, team): Sets the team of the participation with the delivered ids
 -setGoals(id, goalsA, goalsB): Sets both goal fields in the match with the delivered id
 
