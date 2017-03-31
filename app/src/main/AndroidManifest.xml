@@ -20,7 +20,11 @@
         <activity android:name=".pkgGUI.RemoveMatchActivity" />
         <activity android:name=".pkgGUI.RemovePlayerActivity" />
         <activity android:name=".pkgGUI.UpdateMatchActivity" />
-        <activity android:name=".pkgGUI.EditTeamActivity"></activity>
+        <activity android:name=".pkgGUI.EditTeamActivity" />
+        <activity
+            android:name=".pkgGUI.test"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme.NoActionBar"></activity>y
     </application>
 
 </manifest>
