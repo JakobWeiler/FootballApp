@@ -22,8 +22,9 @@
         <activity android:name=".pkgGUI.EditTeamActivity" />
         <activity android:name=".pkgGUI.MainActivity" />
         <activity android:name=".pkgGUI.StatisticActivity" />
-        <activity android:name=".pkgGUI.ProfileActivity" />
-        y
+        <activity android:name=".pkgGUI.MatchActivity" />
+        <activity android:name=".pkgGUI.ProfileActivity">
+        </activity>
     </application>
 
 </manifest>
