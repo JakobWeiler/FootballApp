@@ -7,7 +7,7 @@
     tools:context="at.footballapp.captainandroid.footballapp.pkgGUI.StatisticActivity">
 
     <TableLayout
-        android:layout_width="368dp"
+        android:layout_width="392dp"
         android:layout_height="426dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,14 +34,14 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/btnSaveChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btnSave"
+        android:layout_width="140dp"
+        android:layout_height="52dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:onClick="onBtnSaveChanges"
-        android:text="@string/SaveChanges"
+        android:text="@string/Save"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="447dp" />
+        tools:layout_editor_absoluteY="458dp" />
+
 </android.support.constraint.ConstraintLayout>
