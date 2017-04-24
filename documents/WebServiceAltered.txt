@@ -1,0 +1,2 @@
+Getter:
+-getPlayerPositions(playerId): Returns a collection of positions of the corresponding player
