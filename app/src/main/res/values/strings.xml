@@ -23,4 +23,14 @@
     <string name="Defender">Defender</string>
     <string name="Midfielder">Midfielder</string>
     <string name="Striker">Striker</string>
+
+    <string name="Profile">Profile</string>
+    <string name="Match">Match</string>
+    <string name="Statistic">Statistic</string>
+
+    <string name="Player">Player</string>
+    <string name="Goals">Goals</string>
+    <string name="Penalty">Penalty</string>
+    <string name="Headed_goals">Headed Goals</string>
+    <string name="Own_goals">Own Goals</string>
 </resources>
