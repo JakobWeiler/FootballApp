@@ -35,6 +35,7 @@
         android:id="@+id/btnEditTeam"
         android:layout_width="129dp"
         android:layout_height="59dp"
+        android:onClick="onBtnEditTeam"
         android:text="@string/Edit"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
