@@ -145,4 +145,8 @@ public class Player {
         result = 31 * result + (getStatistics() != null ? getStatistics().hashCode() : 0);
         return result;
     }
+
+    public void addAttendedMatch(Match m){
+
+    }
 }

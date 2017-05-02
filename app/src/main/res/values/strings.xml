@@ -27,6 +27,7 @@
     <string name="Profile">Profile</string>
     <string name="Match">Match</string>
     <string name="Statistic">Statistic</string>
+    <string name="AddMatch">Add Match</string>
 
     <string name="Player">Player</string>
     <string name="Goals">Goals</string>
