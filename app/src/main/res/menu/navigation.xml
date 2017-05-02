@@ -13,4 +13,7 @@
         android:id="@+id/navigation_statistic"
         android:title="@string/Statistic" />
 
+    <item
+        android:id="@+id/navigation_addMatch"
+        android:title="@string/AddMatch"/>
 </menu>
