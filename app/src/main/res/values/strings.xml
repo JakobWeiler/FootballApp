@@ -37,4 +37,10 @@
     <string name="Show">Show</string>
     <string name="Add">Add</string>
     <string name="Update">Update</string>
+
+    <string name="Cancel">Cancel</string>
+    <string name="Insert">Insert</string>
+    <string name="NewPlayer">New Player</string>
+    <string name="Username">Username</string>
+    <string name="ConfirmPassword">Confirm password</string>
 </resources>
