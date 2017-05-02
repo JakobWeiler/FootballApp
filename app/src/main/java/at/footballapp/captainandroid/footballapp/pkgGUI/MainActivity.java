@@ -1,38 +1,42 @@
 package at.footballapp.captainandroid.footballapp.pkgGUI;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.ActionMode;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import at.footballapp.captainandroid.footballapp.R;
 
-public class MainActivity extends AppCompatActivity {
-    private Calendar calendar = null;
-    private Date datePicked = null;
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        calendar.getInstance();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
         ArrayList<String> player = new ArrayList<String>();
@@ -60,60 +64,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.navigation, menu);
-        return true;
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.navigation_profile: startActivity(new Intent(MainActivity.this, ProfileActivity.class)); break;
-            case R.id.navigation_match: startActivity(new Intent(MainActivity.this, MatchActivity.class)); break;
-            case R.id.navigation_statistic: startActivity(new Intent(MainActivity.this, StatisticActivity.class)); break;
-            case R.id.navigation_addMatch: openDatePicker(); break;
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_addPlayer) {
+
+        } else if (id == R.id.nav_removePlayer) {
+            startActivity(new Intent(MainActivity.this, RemovePlayerActivity.class));
+        } else if (id == R.id.nav_Profile) {
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        } else if (id == R.id.nav_addMatch) {
+
+        } else if (id == R.id.nav_removeMatch) {
+            startActivity(new Intent(MainActivity.this, RemoveMatchActivity.class));
+        } else if (id == R.id.nav_updateMatch) {
+            startActivity(new Intent(MainActivity.this, UpdateMatchActivity.class));
+        } else if (id == R.id.nav_showMatch) {
+            startActivity(new Intent(MainActivity.this, MatchActivity.class));
+        } else if (id == R.id.nav_showStatistic) {
+            startActivity(new Intent(MainActivity.this, StatisticActivity.class));
         }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void openDatePicker(){
-        //talk about the version problem
-
-
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            new DatePickerDialog(MainActivity.this, datePickerListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
-       }else{
-            dummyMethod("fuck this version");
-        }
-
-
-    }
-
-    DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener(){
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            datePicked = new Date(year, month, dayOfMonth);
-            afterDatePicked();
-        }
-    };
-
-    private void afterDatePicked(){
-        dummyMethod(datePicked.getYear() + ", " + datePicked.getMonth() + ", " + datePicked.getDay());
-    }
-
-    private void dummyMethod(String s){
-        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-        dlgAlert.setMessage(s);
-        dlgAlert.setTitle("App Title");
-        dlgAlert.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        dlgAlert.setCancelable(true);
-        dlgAlert.create().show();
     }
 }

@@ -20,11 +20,13 @@
         <activity android:name=".pkgGUI.RemoveMatchActivity" />
         <activity android:name=".pkgGUI.UpdateMatchActivity" />
         <activity android:name=".pkgGUI.EditTeamActivity" />
-        <activity android:name=".pkgGUI.MainActivity" />
         <activity android:name=".pkgGUI.StatisticActivity" />
         <activity android:name=".pkgGUI.MatchActivity" />
-        <activity android:name=".pkgGUI.ProfileActivity">
-        </activity>
+        <activity android:name=".pkgGUI.ProfileActivity"></activity>
+        <activity
+            android:name=".pkgGUI.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

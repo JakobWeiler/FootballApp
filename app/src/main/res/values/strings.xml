@@ -34,4 +34,8 @@
     <string name="Penalty">Penalty</string>
     <string name="Headed_goals">Headed Goals</string>
     <string name="Own_goals">Own Goals</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="Show">Show</string>
+    <string name="Add">Add</string>
+    <string name="Update">Update</string>
 </resources>
