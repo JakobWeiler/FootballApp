@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/Player">
+        <menu>
+            <item
+                android:id="@+id/nav_addPlayer"
+                android:icon="@mipmap/ic_menu_add"
+                android:title="@string/Add" />
+            <item
+                android:id="@+id/nav_removePlayer"
+                android:icon="@mipmap/ic_menu_remove"
+                android:title="@string/Remove" />
+            <item
+                android:id="@+id/nav_Profile"
+                android:icon="@mipmap/ic_menu_edit"
+                android:title="@string/Profile" />
+        </menu>
+    </item>
+
+    <item android:title="@string/Match">
+        <menu>
+            <item
+                android:id="@+id/nav_addMatch"
+                android:icon="@mipmap/ic_menu_add"
+                android:title="@string/Add" />
+            <item
+                android:id="@+id/nav_removeMatch"
+                android:icon="@mipmap/ic_menu_remove"
+                android:title="@string/Remove" />
+            <item
+                android:id="@+id/nav_updateMatch"
+                android:icon="@mipmap/ic_menu_edit"
+                android:title="@string/Update" />
+            <item
+                android:id="@+id/nav_showMatch"
+                android:icon="@mipmap/ic_menu_show"
+                android:title="@string/Show" />
+        </menu>
+    </item>
+
+    <item android:title="@string/Statistic">
+        <menu>
+            <item
+                android:id="@+id/nav_showStatistic"
+                android:icon="@mipmap/ic_menu_show"
+                android:title="@string/Show" />
+        </menu>
+    </item>
+
+</menu>
