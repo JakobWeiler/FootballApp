@@ -1,9 +1,10 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
-import android.os.Bundle;
+import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.Date;
+
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerStatistic;
 
 /**
  * Auhtor: Pascal
@@ -12,38 +13,47 @@ import java.util.Date;
 
 public class Database {
     private Player currentPlayer = null;
-    private ArrayList<Match> matches = null;
-    private ArrayList<Player> players = null;
-    private static Database singeltonDB = null;
+    private static Database singletonDB = null;
+    private Gson gson = null;
+    private ControllerStatistic controller = null;
+    private static final String URL = "";
 
     public static Database newInstance(){
-        if(singeltonDB == null){
-            singeltonDB = new Database();
+        if(singletonDB == null){
+            singletonDB = new Database();
         }
 
-        return  singeltonDB;
+        return  singletonDB;
     }
 
     private Database(){
-        matches = new ArrayList<Match>();
-        players = new ArrayList<Player>();
+        gson = new Gson();
+        controller = new ControllerStatistic();
     }
 
     public void addMatch(Match match){
-        matches.add(match);
+
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
+    public void addPlayer(Player player) throws Exception{
+        String paras[] = new String[2];
+        paras[0] = "POST";
+        paras[1] = gson.toJson(player);
+        paras[2] = "/player";
+
+        controller.execute(paras);
+        //Method, URL, value, ...(parametersQuery)
     }
 
     public Match getMatch(Date date){
-        //TODO: implement get (depends on the collection type)
         return null;
     }
 
     public Player getPlayer(int id){
-        //TODO: implement get (depends on the collection type)
         return null;
+    }
+
+    public static String getUrl(){
+        return URL;
     }
 }
