@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import at.footballapp.captainandroid.footballapp.R;
 
@@ -15,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
         //Intent i = new Intent(this, LoginActivity);
         //startActivity(i);
         setContentView(R.layout.activity_login);
+
     }
 
     public void onBtnLogin(View view) {

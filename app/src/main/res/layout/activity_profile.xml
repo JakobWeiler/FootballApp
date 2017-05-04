@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="at.footballapp.captainandroid.footballapp.pkgGUI.ProfileActivity">
+    tools:context="at.footballapp.captainandroid.footballapp.pkgGUI.ProfileActivity"
+    style="@style/background">
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="119dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="38dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:onClick="onBtnSave"
@@ -21,18 +22,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.983"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/button2" />
+        app:layout_constraintRight_toLeftOf="@+id/button2"
+        style="@style/buttons"/>
 
     <Button
         android:id="@+id/button2"
         android:layout_width="119dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="38dp"
         android:layout_marginRight="68dp"
         android:onClick="onBtnReset"
         android:text="@string/Reset"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        style="@style/buttons"/>
 
     <CheckBox
         android:id="@+id/cbGoalkeeper"
@@ -49,7 +52,8 @@
         app:layout_constraintHorizontal_bias="0.504"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/cbDefender"
-        app:layout_constraintVertical_bias="0.936" />
+        app:layout_constraintVertical_bias="0.936"
+        style="@style/textViews"/>
 
     <CheckBox
         android:id="@+id/cbDefender"
@@ -63,7 +67,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/cbMidfielder" />
+        app:layout_constraintBottom_toTopOf="@+id/cbMidfielder"
+        style="@style/textViews"/>
 
     <CheckBox
         android:id="@+id/cbMidfielder"
@@ -77,7 +82,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         android:layout_marginBottom="14dp"
-        app:layout_constraintBottom_toTopOf="@+id/cbStriker" />
+        app:layout_constraintBottom_toTopOf="@+id/cbStriker"
+        style="@style/textViews"/>
 
     <CheckBox
         android:id="@+id/cbStriker"
@@ -91,7 +97,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="183dp" />
+        android:layout_marginBottom="183dp"
+        style="@style/textViews"/>
 
 
 </android.support.constraint.ConstraintLayout>
