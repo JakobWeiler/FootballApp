@@ -31,24 +31,31 @@ public class Database {
         controller = new ControllerStatistic();
     }
 
+    //TODO: implement addMatch
     public void addMatch(Match match){
 
     }
 
     public void addPlayer(Player player) throws Exception{
-        String paras[] = new String[2];
+        String paras[] = new String[3];
         paras[0] = "POST";
         paras[1] = gson.toJson(player);
         paras[2] = "/player";
 
         controller.execute(paras);
         //Method, URL, value, ...(parametersQuery)
+
+        if((controller.get()).equals("200")){
+            System.out.println("ok");
+        }
     }
 
+    //TODO: implement getMatch
     public Match getMatch(Date date){
         return null;
     }
 
+    //TODO: implement getPlayer
     public Player getPlayer(int id){
         return null;
     }
