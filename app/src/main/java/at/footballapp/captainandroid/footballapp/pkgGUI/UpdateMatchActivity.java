@@ -18,4 +18,8 @@ public class UpdateMatchActivity extends AppCompatActivity {
     public void onBtnEditTeam(View view) {
         startActivity(new Intent(UpdateMatchActivity.this, EditTeamActivity.class));
     }
+
+    public void onBtnStatistic(View view) {
+        startActivity(new Intent(UpdateMatchActivity.this, StatisticActivity.class));
+    }
 }

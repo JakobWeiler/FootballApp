@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("FootballApp");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -93,8 +94,6 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, UpdateMatchActivity.class));
         } else if (id == R.id.nav_showMatch) {
             startActivity(new Intent(MainActivity.this, MatchActivity.class));
-        } else if (id == R.id.nav_showStatistic) {
-            startActivity(new Intent(MainActivity.this, StatisticActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
