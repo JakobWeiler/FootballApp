@@ -3,6 +3,7 @@ package at.footballapp.captainandroid.footballapp.pkgGUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,8 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import at.footballapp.captainandroid.footballapp.R;
+import at.footballapp.captainandroid.footballapp.pkgData.Database;
+import at.footballapp.captainandroid.footballapp.pkgData.Match;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -81,17 +85,25 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_addPlayer) {
-
+            DialogFragment newFragment = new AddPlayerDialogFragment();
+            newFragment.show(getSupportFragmentManager(), "newPlayer");
         } else if (id == R.id.nav_removePlayer) {
             startActivity(new Intent(MainActivity.this, RemovePlayerActivity.class));
         } else if (id == R.id.nav_Profile) {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_addMatch) {
-
+            //Database.newInstance().addMatch(new Match(todaysDate));   -->Select in spinner
+            Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
+            Spinner spMatch = (Spinner) findViewById(R.id.spMatch);
+            intent.putExtra("intentMatchId", ((Match)spMatch.getSelectedItem()).getId());
+            startActivity(intent);
         } else if (id == R.id.nav_removeMatch) {
             startActivity(new Intent(MainActivity.this, RemoveMatchActivity.class));
         } else if (id == R.id.nav_updateMatch) {
-            startActivity(new Intent(MainActivity.this, UpdateMatchActivity.class));
+            Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
+            Spinner spMatch = (Spinner) findViewById(R.id.spMatch);
+            intent.putExtra("intentMatchId", ((Match)spMatch.getSelectedItem()).getId());
+            startActivity(intent);
         } else if (id == R.id.nav_showMatch) {
             startActivity(new Intent(MainActivity.this, MatchActivity.class));
         }

@@ -10,9 +10,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import at.footballapp.captainandroid.footballapp.R;
+import at.footballapp.captainandroid.footballapp.pkgData.Database;
+import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 
 public class AddPlayerDialogFragment extends DialogFragment {
@@ -32,7 +35,8 @@ public class AddPlayerDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.Insert, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
+                        //Database.newInstance().addPlayer(new Player());
+                        EditText txtUsername = (EditText) ((Dialog)dialog).findViewById(R.id.username);     // how to get access to the field values
                     }
                 })
                 .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
