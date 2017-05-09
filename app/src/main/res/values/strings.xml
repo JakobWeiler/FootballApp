@@ -44,4 +44,5 @@
     <string name="NewPlayer">New Player</string>
     <string name="Username">Username</string>
     <string name="ConfirmPassword">Confirm password</string>
+    <string name="Admin">Admin</string>
 </resources>

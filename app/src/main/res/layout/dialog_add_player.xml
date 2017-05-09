@@ -40,7 +40,16 @@
         android:layout_marginTop="4dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="4dp"
         android:fontFamily="sans-serif"
         android:hint="@string/ConfirmPassword"/>
+    <CheckBox
+        android:id="@+id/cbIsAdmin"
+        android:layout_width="247dp"
+        android:layout_height="60dp"
+        android:text="@string/Admin"
+        android:textSize="18sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="12dp" />
 </LinearLayout>
