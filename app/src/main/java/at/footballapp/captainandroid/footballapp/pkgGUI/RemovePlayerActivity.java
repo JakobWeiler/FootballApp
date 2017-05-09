@@ -1,15 +1,16 @@
 package at.footballapp.captainandroid.footballapp.pkgGUI;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import at.footballapp.captainandroid.footballapp.R;
-import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class RemovePlayerActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class RemovePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_player);
 
-        ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
+        final ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
         ArrayList<String> player = new ArrayList<String>();
         player.add("Player");
         player.add("Some players");
@@ -29,5 +30,25 @@ public class RemovePlayerActivity extends AppCompatActivity {
         );
 
         lvPlayer.setAdapter(adapterPlayer);
+
+
+        lvPlayer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                // ListView Clicked item value
+                String  itemValue    = (String) lvPlayer.getItemAtPosition(position);
+
+                DialogFragment removeFragment = new RemoveFragment();
+                Bundle args = new Bundle();
+                args.putString("selectedItem", itemValue);
+                removeFragment.setArguments(args);
+                removeFragment.show(getSupportFragmentManager(), "removePlayer");
+
+            }
+
+        });
     }
 }
