@@ -6,10 +6,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import at.footballapp.captainandroid.footballapp.R;
-import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class RemovePlayerActivity extends AppCompatActivity {
 
@@ -20,7 +18,7 @@ public class RemovePlayerActivity extends AppCompatActivity {
 
         ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
         ArrayList<String> player = new ArrayList<String>();
-        player.add("Player");
+        player.add("Player_old");
         player.add("Some players");
         ArrayAdapter<String> adapterPlayer = new ArrayAdapter<String>(
                 this,

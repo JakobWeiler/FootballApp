@@ -13,8 +13,8 @@ public class Match {
     private Date date = null;
     private int goalsA;
     private int goalsB;
-    private ArrayList<Player> teamA = null;
-    private ArrayList<Player> teamB = null;
+    private ArrayList<Player_old> teamA = null;
+    private ArrayList<Player_old> teamB = null;
 
     /**
      * author: C. P. Wutti
@@ -26,7 +26,7 @@ public class Match {
      * @param _teamA
      * @param _teamB
      */
-    public Match(int _id, Date _date, int _goalsA, int _goalsB, ArrayList<Player> _teamA, ArrayList<Player> _teamB){
+    public Match(int _id, Date _date, int _goalsA, int _goalsB, ArrayList<Player_old> _teamA, ArrayList<Player_old> _teamB){
         super();
         setId(_id);
         setDate(_date);
@@ -75,19 +75,19 @@ public class Match {
         this.goalsB = goalsB;
     }
 
-    public ArrayList<Player> getTeamA() {
+    public ArrayList<Player_old> getTeamA() {
         return teamA;
     }
 
-    public void setTeamA(ArrayList<Player> teamA) {
+    public void setTeamA(ArrayList<Player_old> teamA) {
         this.teamA = teamA;
     }
 
-    public ArrayList<Player> getTeamB() {
+    public ArrayList<Player_old> getTeamB() {
         return teamB;
     }
 
-    public void setTeamB(ArrayList<Player> teamB) {
+    public void setTeamB(ArrayList<Player_old> teamB) {
         this.teamB = teamB;
     }
 

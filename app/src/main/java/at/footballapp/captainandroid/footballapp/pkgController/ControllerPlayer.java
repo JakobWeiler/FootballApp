@@ -1,6 +1,9 @@
 package at.footballapp.captainandroid.footballapp.pkgController;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,34 +20,46 @@ import at.footballapp.captainandroid.footballapp.pkgData.Database;
  * Date: 03.05.2017
  */
 
-public class ControllerPlayer extends AsyncTask<String, Void, String> {
+public class ControllerPlayer extends AsyncTask<Object, Void, String> {
     private static final String URL = Database.getUrl();
+    private Gson gson;
 
     @Override
-    protected String doInBackground(String... command) {    //(Method, URL, value)
+    protected String doInBackground(Object... command) {    //(Method, URL, value)
         BufferedReader reader = null;
         BufferedWriter writer = null;
         URL url = null;
         String response = null;
+        gson = new Gson();
 
         try{
             if(command[0].equals("POST")){
                 if (command[1].equals("/player")) { //add player
-                    String newPlayer = command[2];
+                    String newPlayer = gson.toJson(command[2]);
+                    Log.d("output", newPlayer);
 
                     url = new URL(URL + command[1]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setDoOutput(true);
                     urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("Content-Type","application/json");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
 
+                    /*
                     OutputStream os = urlConnection.getOutputStream();
-                    writer = new BufferedWriter( new OutputStreamWriter(os, "UTF-8"));
+                    writer = new BufferedWriter( new OutputStreamWriter(os));
                     writer.write(newPlayer);
 
                     writer.flush();
                     writer.close();
-                    os.close();
 
+                    os.close();
+                    */
+
+                    byte[] outputBytes = newPlayer.getBytes("UTF-8");
+                    OutputStream os = urlConnection.getOutputStream();
+                    os.write(outputBytes);
+
+                    os.flush();
                     response = Integer.toString(urlConnection.getResponseCode());
                 } else {
                     //get player /player/auth

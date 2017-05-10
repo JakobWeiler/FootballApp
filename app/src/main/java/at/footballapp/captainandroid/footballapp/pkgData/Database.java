@@ -1,10 +1,10 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
-import com.google.gson.Gson;
+import android.util.Log;
 
 import java.util.Date;
 
-import at.footballapp.captainandroid.footballapp.pkgController.ControllerStatistic;
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
 
 /**
  * Auhtor: Pascal
@@ -12,11 +12,10 @@ import at.footballapp.captainandroid.footballapp.pkgController.ControllerStatist
  */
 
 public class Database {
-    private Player currentPlayer = null;
+    private Player_old currentPlayer = null;
     private static Database singletonDB = null;
-    private Gson gson = null;
-    private ControllerStatistic controller = null;
-    private static final String URL = "";
+    private ControllerPlayer controllerPlayer = null;
+    private static final String URL = "http://192.168.142.143:8080/Soccer_WebService/resources";
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -27,8 +26,7 @@ public class Database {
     }
 
     private Database(){
-        gson = new Gson();
-        controller = new ControllerStatistic();
+        controllerPlayer = new ControllerPlayer();
     }
 
     //TODO: implement addMatch
@@ -36,17 +34,17 @@ public class Database {
 
     }
 
-    public void addPlayer(Player player) throws Exception{
-        String paras[] = new String[3];
+    public void addPlayer(Player player)throws Exception{
+        Object paras[] = new Object[3];
         paras[0] = "POST";
-        paras[1] = gson.toJson(player);
-        paras[2] = "/player";
+        paras[1] = "/player";
+        paras[2] = player;
 
-        controller.execute(paras);
+        controllerPlayer.execute(paras);
         //Method, URL, value, ...(parametersQuery)
 
-        if((controller.get()).equals("200")){
-            System.out.println("ok");
+        if((controllerPlayer.get()).equals("200")){
+            Log.d("output", "player added successfully");
         }
     }
 
@@ -56,7 +54,7 @@ public class Database {
     }
 
     //TODO: implement getPlayer
-    public Player getPlayer(int id){
+    public Player_old getPlayer(int id){
         return null;
     }
 

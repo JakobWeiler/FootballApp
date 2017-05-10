@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
 
         Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
         ArrayList<String> player = new ArrayList<String>();
-        player.add("Player");
+        player.add("Player_old");
         player.add("Some players");
         ArrayAdapter<String> adapterPlayer = new ArrayAdapter<String>(
                 this,
