@@ -93,16 +93,16 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_addMatch) {
             //Database.newInstance().addMatch(new Match(todaysDate));   -->Select in spinner
-            Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
+            /*Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
             Spinner spMatch = (Spinner) findViewById(R.id.spMatch);
             intent.putExtra("intentMatchId", ((Match)spMatch.getSelectedItem()).getId());
-            startActivity(intent);
+            startActivity(intent);*/
         } else if (id == R.id.nav_removeMatch) {
             startActivity(new Intent(MainActivity.this, RemoveMatchActivity.class));
         } else if (id == R.id.nav_updateMatch) {
             Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
             Spinner spMatch = (Spinner) findViewById(R.id.spMatch);
-            intent.putExtra("intentMatchId", ((Match)spMatch.getSelectedItem()).getId());
+            //intent.putExtra("intentMatchId", ((Match)spMatch.getSelectedItem()).getId());
             startActivity(intent);
         } else if (id == R.id.nav_showMatch) {
             startActivity(new Intent(MainActivity.this, MatchActivity.class));

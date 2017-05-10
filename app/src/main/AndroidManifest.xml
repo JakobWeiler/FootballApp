@@ -13,24 +13,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pkgGUI.LoginActivity">
+        <activity android:name=".pkgGUI.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pkgGUI.RemovePlayerActivity" />
-        <activity android:name=".pkgGUI.RemoveMatchActivity" />
-        <activity android:name=".pkgGUI.UpdateMatchActivity" />
-        <activity android:name=".pkgGUI.EditTeamActivity" />
-        <activity android:name=".pkgGUI.StatisticActivity" />
-        <activity android:name=".pkgGUI.MatchActivity" />
-        <activity android:name=".pkgGUI.ProfileActivity" />
+        <activity android:name=".pkgGUI.RemovePlayerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pkgGUI.RemoveMatchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pkgGUI.UpdateMatchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pkgGUI.EditTeamActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pkgGUI.StatisticActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pkgGUI.MatchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".pkgGUI.ProfileActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".pkgGUI.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
