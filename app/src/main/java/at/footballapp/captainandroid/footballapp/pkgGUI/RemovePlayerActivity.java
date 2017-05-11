@@ -21,7 +21,7 @@ public class RemovePlayerActivity extends AppCompatActivity {
 
         final ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
         ArrayList<String> player = new ArrayList<String>();
-        player.add("Player_old");
+        player.add("Player");
         player.add("Some players");
         ArrayAdapter<String> adapterPlayer = new ArrayAdapter<String>(
                 this,

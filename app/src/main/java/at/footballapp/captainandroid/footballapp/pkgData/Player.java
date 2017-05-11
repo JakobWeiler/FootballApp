@@ -8,6 +8,10 @@ package at.footballapp.captainandroid.footballapp.pkgData;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import at.footballapp.captainandroid.footballapp.pkgMisc.EnumPositions;
 
 /**
  *
@@ -23,6 +27,9 @@ public class Player implements Serializable{
     private int tieds = 0;
     private int losses = 0;
     private int goalDifference = 0;
+    private transient ArrayList<EnumPositions> positions = null;
+    private transient ArrayList<Match> attendedMatches = null;
+    private transient HashMap<Integer, Statistic> statistics = null;
 
     public Player(){}
     
@@ -35,6 +42,9 @@ public class Player implements Serializable{
         this.tieds = tieds;
         this.losses = losses;
         this.goalDifference = goalDifference;
+        this.positions = new ArrayList<EnumPositions>();
+        this.attendedMatches = new ArrayList<Match>();
+        this.statistics = new HashMap<Integer, Statistic>();
     }
 
     public Player(String name, String pw, boolean isAdmin){
@@ -72,7 +82,6 @@ public class Player implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
-    
 
     public int getIsAdmin() {
         return isAdmin;

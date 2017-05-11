@@ -7,10 +7,13 @@ import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 
@@ -36,7 +39,6 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
             if(command[0].equals("POST")){
                 if (command[1].equals("/player")) { //add player
                     String newPlayer = gson.toJson(command[2]);
-                    Log.d("output", newPlayer);
 
                     url = new URL(URL + command[1]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -44,22 +46,13 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     urlConnection.setRequestMethod("POST");
                     urlConnection.setRequestProperty("Content-Type", "application/json");
 
-                    /*
-                    OutputStream os = urlConnection.getOutputStream();
-                    writer = new BufferedWriter( new OutputStreamWriter(os));
-                    writer.write(newPlayer);
-
-                    writer.flush();
-                    writer.close();
-
-                    os.close();
-                    */
-
                     byte[] outputBytes = newPlayer.getBytes("UTF-8");
+                    urlConnection.setRequestProperty("Content-Length", Integer.toString(outputBytes.length));
                     OutputStream os = urlConnection.getOutputStream();
                     os.write(outputBytes);
 
                     os.flush();
+
                     response = Integer.toString(urlConnection.getResponseCode());
                 } else {
                     //get player /player/auth
@@ -68,6 +61,7 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
 
             } else if (command[0].equals("GET")){
                 //get all players
+
             } else if (command[0].equals("PUT")){
                 //update player
             }

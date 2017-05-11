@@ -2,6 +2,9 @@ package at.footballapp.captainandroid.footballapp.pkgData;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
@@ -12,10 +15,11 @@ import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
  */
 
 public class Database {
-    private Player_old currentPlayer = null;
+    private Player currentPlayer = null;
     private static Database singletonDB = null;
     private ControllerPlayer controllerPlayer = null;
-    private static final String URL = "http://192.168.142.143:8080/Soccer_WebService/resources";
+    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
+    private Gson gson;
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -27,6 +31,7 @@ public class Database {
 
     private Database(){
         controllerPlayer = new ControllerPlayer();
+        gson = new Gson();
     }
 
     //TODO: implement addMatch
@@ -43,8 +48,8 @@ public class Database {
         controllerPlayer.execute(paras);
         //Method, URL, value, ...(parametersQuery)
 
-        if((controllerPlayer.get()).equals("200")){
-            Log.d("output", "player added successfully");
+        if(!(controllerPlayer.get()).equals("200")){
+            throw new Exception("webservice problem --add");
         }
     }
 
@@ -54,7 +59,7 @@ public class Database {
     }
 
     //TODO: implement getPlayer
-    public Player_old getPlayer(int id){
+    public Player getPlayer(int id){
         return null;
     }
 
