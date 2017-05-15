@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import at.footballapp.captainandroid.footballapp.R;
+import at.footballapp.captainandroid.footballapp.pkgData.Database;
 
 public class LoginActivity extends AppCompatActivity {
 
