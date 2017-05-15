@@ -46,9 +46,12 @@
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pkgGUI.AddPlayerActivity"
+        <activity
+            android:name=".pkgGUI.AddPlayerActivity"
             android:theme="@android:style/Theme.Dialog" />
-
+        <activity
+            android:name=".pkgGUI.RemoveDialogActivity"
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>
