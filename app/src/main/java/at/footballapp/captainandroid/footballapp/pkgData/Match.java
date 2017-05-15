@@ -91,11 +91,6 @@ public class Match {
         this.teamB = teamB;
     }
 
-    /**
-     * Automatically generated equals
-     * @param o should be of type Match
-     * @return whether the two objects are equal
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

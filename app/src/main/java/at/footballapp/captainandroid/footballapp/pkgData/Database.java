@@ -88,6 +88,7 @@ public class Database {
                 allPlayers = gson.fromJson(result, playerListType);
             }
         });
+
         t.start();
         t.join();
 
