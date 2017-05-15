@@ -1,5 +1,6 @@
 package at.footballapp.captainandroid.footballapp.pkgGUI;
 
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,11 +42,9 @@ public class RemoveMatchActivity extends AppCompatActivity {
                 // ListView Clicked item value
                 String  itemValue    = (String) lvMatches.getItemAtPosition(position);
 
-                DialogFragment removeFragment = new RemoveFragment();
-                Bundle args = new Bundle();
-                args.putString("selectedItem", itemValue);
-                removeFragment.setArguments(args);
-                removeFragment.show(getSupportFragmentManager(), "removeMatch");
+                Intent intent = new Intent(RemoveMatchActivity.this, RemoveDialogActivity.class);
+                intent.putExtra("selectedItem", itemValue);
+                startActivity(intent);
 
             }
 
