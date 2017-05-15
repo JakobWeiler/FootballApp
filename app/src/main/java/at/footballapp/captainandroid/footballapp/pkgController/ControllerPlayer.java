@@ -51,9 +51,11 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     OutputStream os = urlConnection.getOutputStream();
                     os.write(outputBytes);
 
-                    os.flush();
-
                     response = Integer.toString(urlConnection.getResponseCode());
+
+                    os.flush();
+                    os.close();
+                    urlConnection.disconnect();
                 } else {
                     //get player /player/auth
                 }
@@ -73,6 +75,7 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     }
 
                     response = sb.toString();
+                    reader.close();
 
                 }
 
