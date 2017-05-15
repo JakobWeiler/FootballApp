@@ -60,7 +60,21 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
             } else if (command[0].equals("DELETE")){
 
             } else if (command[0].equals("GET")){
-                //get all players
+                if (command[1].equals("/player")) { //get all players
+                    url = new URL(URL + command[1]);
+                    URLConnection conn = url.openConnection();
+
+                    reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+
+                    while((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+
+                    response = sb.toString();
+
+                }
 
             } else if (command[0].equals("PUT")){
                 //update player

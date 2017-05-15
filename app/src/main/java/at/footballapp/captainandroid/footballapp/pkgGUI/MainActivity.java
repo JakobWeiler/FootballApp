@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,15 +17,23 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.R;
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Match;
+import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ControllerPlayer controller = null;
+    Database db = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        db = Database.newInstance();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,17 +53,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
-        ArrayList<String> player = new ArrayList<String>();
-        player.add("Player");
-        player.add("Some players");
-        ArrayAdapter<String> adapterPlayer = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_spinner_item,
-                player
-        );
-
-        spPlayer.setAdapter(adapterPlayer);
 
         Spinner spMatch = (Spinner) findViewById(R.id.spMatch);
         ArrayList<String> match = new ArrayList<String>();
@@ -66,6 +65,22 @@ public class MainActivity extends AppCompatActivity
         );
 
         spMatch.setAdapter(adapterMatch);
+
+
+        Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
+        ArrayAdapter<Player> adapterPlayer;
+        try {
+            adapterPlayer = new ArrayAdapter<Player>(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    db.getAllPlayers()
+            );
+
+            spPlayer.setAdapter(adapterPlayer);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -112,4 +127,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
