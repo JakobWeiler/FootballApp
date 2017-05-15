@@ -85,8 +85,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_addPlayer) {
-            DialogFragment newFragment = new AddPlayerDialogFragment();
-            newFragment.show(getSupportFragmentManager(), "newPlayer");
+            startActivity(new Intent(MainActivity.this, AddPlayerActivity.class));
+           // DialogFragment newFragment = new AddPlayerDialogFragment();
+            //newFragment.show(getSupportFragmentManager(), "newPlayer");
         } else if (id == R.id.nav_removePlayer) {
             startActivity(new Intent(MainActivity.this, RemovePlayerActivity.class));
         } else if (id == R.id.nav_Profile) {

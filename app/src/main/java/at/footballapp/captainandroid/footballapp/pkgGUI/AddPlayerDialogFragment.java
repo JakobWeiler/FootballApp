@@ -27,6 +27,7 @@ public class AddPlayerDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        setStyle( DialogFragment.STYLE_NORMAL,R.style.RMTheme);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -36,7 +37,7 @@ public class AddPlayerDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //Database.newInstance().addPlayer(new Player());
-                        EditText txtUsername = (EditText) ((Dialog)dialog).findViewById(R.id.username);     // how to get access to the field values
+                        EditText txtUsername = (EditText) ((Dialog) dialog).findViewById(R.id.username);     // how to get access to the field values
                     }
                 })
                 .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
@@ -44,6 +45,7 @@ public class AddPlayerDialogFragment extends DialogFragment {
                         AddPlayerDialogFragment.this.getDialog().cancel();
                     }
                 });
+
         return builder.create();
     }
 }
