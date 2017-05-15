@@ -2,6 +2,8 @@ package at.footballapp.captainandroid.footballapp.pkgGUI;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.PatternMatcher;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import at.footballapp.captainandroid.footballapp.R;
@@ -30,33 +33,40 @@ public class AddPlayerActivity extends Activity {
         EditText txtPassword = (EditText) (findViewById(R.id.password));
         EditText txtCPassword = (EditText) (findViewById(R.id.confirmPassword));
         CheckBox isAdmin = (CheckBox) (findViewById(R.id.cbIsAdmin));
+        Pattern p = Pattern.compile("[a-zA-Z_0-9]+");
+        Matcher m = p.matcher(txtUsername.getText().toString());
         String msg = "ok";
 
         if (txtPassword.length() >= 5 && txtUsername.length() >= 5) {
-            if (txtPassword.getText().equals(txtCPassword.getText())) {
-                if (!Pattern.matches("\\w", txtUsername.getText())) {
-                    msg = "Username contains invalid characters !";
+            if(!Database.newInstance().nameUsed(txtUsername.getText().toString())){
+                if ((txtPassword.getText().toString()).compareTo(txtCPassword.getText().toString()) == 0) {
+                    if (!m.matches()) {
+                        msg = "Username contains invalid characters !";
+                    }
+                } else {
+                    msg = "Passwords do not accord !";
                 }
             } else {
-                msg = "Passwords do not accord !";
+                msg = "Username is already used !";
             }
         } else {
-            msg = "Username or password is too short !";
+            msg = "Username or password is too short ! (min. 5 chars)";
         }
 
-        if (msg.equals("ok")) {
+        if (msg.compareTo("ok") == 0) {
             try {
                 Database.newInstance().addPlayer(new Player(txtUsername.getText().toString(),
                         txtPassword.getText().toString(),
                         isAdmin.isChecked()));
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally{
+                this.finish();
             }
         } else {
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         }
     }
-
 
     public void onBtnCancel(View view) {
         this.finish();

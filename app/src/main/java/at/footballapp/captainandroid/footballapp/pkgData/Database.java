@@ -21,10 +21,10 @@ import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    private ControllerPlayer controllerPlayer = null;
     private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";    //intern: 192.168.142.143   extern: 212.152.179.116
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
+    private ControllerPlayer controllerPlayer = null;
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -35,7 +35,6 @@ public class Database {
     }
 
     private Database(){
-        controllerPlayer = new ControllerPlayer();
         gson = new Gson();
     }
 
@@ -45,6 +44,9 @@ public class Database {
     }
 
     public void addPlayer(Player player)throws Exception{
+
+        controllerPlayer = new ControllerPlayer();
+
         Object paras[] = new Object[3];
         paras[0] = "POST";
         paras[1] = "/player";
@@ -93,6 +95,10 @@ public class Database {
         t.join();
 
         return allPlayers;
+    }
+
+    public boolean nameUsed(String name){
+        return allPlayers.contains(new Player(name));
     }
 
     public static String getUrl(){

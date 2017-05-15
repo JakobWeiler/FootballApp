@@ -59,6 +59,10 @@ public class Player implements Serializable{
         }
     }
 
+    public Player(String name ){
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
@@ -126,5 +130,20 @@ public class Player implements Serializable{
     @Override
     public String toString() {
         return name + ", " + goalDifference;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        return name.equals(player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

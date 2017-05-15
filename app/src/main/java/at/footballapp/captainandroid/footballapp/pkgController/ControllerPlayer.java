@@ -76,7 +76,6 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
 
                     response = sb.toString();
                     reader.close();
-
                 }
 
             } else if (command[0].equals("PUT")){
