@@ -82,12 +82,14 @@ public class Database {
             throw new Exception("webservice problem --getAllPlayers");
         }
 
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 Type playerListType = new TypeToken<ArrayList<Player>>(){}.getType();
                 allPlayers = gson.fromJson(result, playerListType);
             }
-        }).start();
+        });
+        t.start();
+        t.join();
 
         return allPlayers;
     }
