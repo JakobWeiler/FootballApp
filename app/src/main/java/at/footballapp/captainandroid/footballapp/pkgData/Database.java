@@ -3,7 +3,7 @@ package at.footballapp.captainandroid.footballapp.pkgData;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Auhtor: Pascal
@@ -39,11 +39,22 @@ public class Database {
 
     public Match getMatch(Date date){
         //TODO: implement get (depends on the collection type)
-        return null;
+        //current implementation for ArrayList
+        int i;
+        boolean objectFound = false;
+
+
+        for(i = 0; !objectFound; i++)
+            if(date.equals(matches.get(i).getDate()))
+                objectFound = true;
+
+        return matches.get(i - 1);
     }
 
     public Player getPlayer(int id){
         //TODO: implement get (depends on the collection type)
         return null;
     }
+
+
 }

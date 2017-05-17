@@ -61,16 +61,16 @@ public class GenerateOfflineTestData {
 
         Match m = null;
 
-        m = new Match(1, new Date(2017,10,9,10,4), 11,11, listA, listB);
+        m = new Match(1, (java.sql.Date) new Date(2017,10,9,10,4), 11,11, listA, listB);
         dbInstance.addMatch(m);
 
-        m = new Match(1,new Date(2017,9,9,10,4), 11,11, listA, listB);
+        m = new Match(1,(java.sql.Date)new Date(2017,9,9,10,4), 11,11, listA, listB);
         dbInstance.addMatch(m);
 
-        m = new Match(1, new Date(2016,10,9,10,4), 11,11, listA, listB);
+        m = new Match(1, (java.sql.Date)new Date(2016,10,9,10,4), 11,11, listA, listB);
         dbInstance.addMatch(m);
 
-        m = new Match(1, new Date(2017,04,20,10,4), 11,11, listA, listB);
+        m = new Match(1, (java.sql.Date)new Date(2017,04,20,10,4), 11,11, listA, listB);
         dbInstance.addMatch(m);
 
     }

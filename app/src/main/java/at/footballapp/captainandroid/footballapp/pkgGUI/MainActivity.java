@@ -1,5 +1,6 @@
 package at.footballapp.captainandroid.footballapp.pkgGUI;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,9 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import at.footballapp.captainandroid.footballapp.R;
 
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -86,7 +91,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_Profile) {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_addMatch) {
-
+            Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
+            intent.putExtra("ADDMATCH", "ADDMATCH");
+            startActivity(intent);
         } else if (id == R.id.nav_removeMatch) {
             startActivity(new Intent(MainActivity.this, RemoveMatchActivity.class));
         } else if (id == R.id.nav_updateMatch) {
@@ -101,4 +108,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
