@@ -20,7 +20,7 @@
 
     <ListView
         android:layout_width="346dp"
-        android:layout_height="373dp"
+        android:layout_height="280dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/searchMatches"
         android:id="@+id/lvMatches"
@@ -28,20 +28,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/btnRemove"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/Remove"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvMatches"
-        style="@style/buttons"/>
 
 </android.support.constraint.ConstraintLayout>

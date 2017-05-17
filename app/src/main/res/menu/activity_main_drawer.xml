@@ -39,13 +39,4 @@
         </menu>
     </item>
 
-    <item android:title="@string/Statistic">
-        <menu>
-            <item
-                android:id="@+id/nav_showStatistic"
-                android:icon="@mipmap/ic_menu_show"
-                android:title="@string/Show" />
-        </menu>
-    </item>
-
 </menu>

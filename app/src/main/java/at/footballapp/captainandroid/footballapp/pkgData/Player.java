@@ -1,62 +1,66 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package at.footballapp.captainandroid.footballapp.pkgData;
 
+import com.google.gson.Gson;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import at.footballapp.captainandroid.footballapp.pkgMisc.EnumPositions;
 
 /**
- * Auhtors: P. L. Lagger, C. P. Wutti
- * Date: 23.03.2017
+ *
+ * @author schueler
  */
-
-public class Player {
+public class Player implements Serializable{
+    
     private int id;
-    private boolean isAdmin = false;
-    private ArrayList<EnumPositions> positions = null;
     private String name;
-    private ArrayList<Match> attendedMatches = null;
-    private HashMap<Integer, Statistic> statistics = null;
+    private String password;
+    private int isAdmin;
+    private int wins = 0;
+    private int tieds = 0;
+    private int losses = 0;
+    private int goalDifference = 0;
+    private transient ArrayList<EnumPositions> positions = null;
+    private transient ArrayList<Match> attendedMatches = null;
+    private transient HashMap<Integer, Statistic> statistics = null;
 
-    /**
-     * author: C. P. Wutti
-     * Main Constructor
-     * @param _id
-     * @param _isAdmin
-     * @param _name
-     * @param _attendedMatches
-     * @param _statistics
-     */
-
-    public Player (int _id, boolean _isAdmin, ArrayList<EnumPositions> _positions, String _name, ArrayList<Match> _attendedMatches, HashMap<Integer, Statistic> _statistics){
-        super();
-        setId(_id);
-        setIsAdmin(_isAdmin);
-        setPositions(_positions);
-        setName(_name);
-        setAttendedMatches(_attendedMatches);
-        setStatistics(_statistics);
+    public Player(){}
+    
+    public Player(int id, String name, String pw, int isAdmin, int wins, int tieds, int losses, int goalDifference) {
+        this.id = id;
+        this.name = name;
+        this.password = pw;
+        this.isAdmin = isAdmin;
+        this.wins = wins;
+        this.tieds = tieds;
+        this.losses = losses;
+        this.goalDifference = goalDifference;
+        this.positions = new ArrayList<EnumPositions>();
+        this.attendedMatches = new ArrayList<Match>();
+        this.statistics = new HashMap<Integer, Statistic>();
     }
 
-    /**
-     * author: C. P. Wutti
-     * Default constructor
-     */
-    public Player(){
-        this(-1, false, null, "", null, null);
+    public Player(String name, String pw, boolean isAdmin){
+        this.name = name;
+        this.password = pw;
+        this.id = -1;
+
+        if(isAdmin){
+            this.isAdmin = 1;
+        } else {
+            this.isAdmin = 0;
+        }
     }
 
-    /**
-     * author: C. P. Wutti
-     * Constructor without id
-     * @param _isAdmin
-     * @param _name
-     * @param _positions
-     * @param _attendedMatches
-     * @param _statistics
-     */
-    public Player(boolean _isAdmin, String _name, ArrayList<EnumPositions> _positions,ArrayList<Match> _attendedMatches, HashMap<Integer, Statistic> _statistics){
-        this(-1, false, _positions, _name, _attendedMatches, _statistics);
+    public Player(String name ){
+        this.name = name;
     }
 
     public int getId() {
@@ -67,22 +71,6 @@ public class Player {
         this.id = id;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public ArrayList<EnumPositions> getPositions() {
-        return positions;
-    }
-
-    public void setPositions(ArrayList<EnumPositions> positions) {
-        this.positions = positions;
-    }
-
     public String getName() {
         return name;
     }
@@ -91,27 +79,59 @@ public class Player {
         this.name = name;
     }
 
-    public ArrayList<Match> getAttendedMatches() {
-        return attendedMatches;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAttendedMatches(ArrayList<Match> attendedMatches) {
-        this.attendedMatches = attendedMatches;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public HashMap<Integer, Statistic> getStatistics() {
-        return statistics;
+    public int getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setStatistics(HashMap<Integer, Statistic> statistics) {
-        this.statistics = statistics;
+    public void setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
-    /**
-     * Automatically generated equals
-     * @param o should be of type Player
-     * @return whether the two objects are equal
-     */
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getTieds() {
+        return tieds;
+    }
+
+    public void setTieds(int tieds) {
+        this.tieds = tieds;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public int getGoalDifference() {
+        return goalDifference;
+    }
+
+    public void setGoalDifference(int goalDifference) {
+        this.goalDifference = goalDifference;
+    }
+
+    @Override
+    public String toString() {
+        return name + ", " + goalDifference;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -119,34 +139,11 @@ public class Player {
 
         Player player = (Player) o;
 
-        if (getId() != player.getId()) return false;
-        if (isAdmin() != player.isAdmin()) return false;
-        if (getPositions() != null ? !getPositions().equals(player.getPositions()) : player.getPositions() != null)
-            return false;
-        if (getName() != null ? !getName().equals(player.getName()) : player.getName() != null)
-            return false;
-        if (getAttendedMatches() != null ? !getAttendedMatches().equals(player.getAttendedMatches()) : player.getAttendedMatches() != null)
-            return false;
-        return getStatistics() != null ? getStatistics().equals(player.getStatistics()) : player.getStatistics() == null;
-
+        return name.equals(player.name);
     }
 
-    /**
-     * Automatically generated hashCode
-     * @return hashCode
-     */
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + (isAdmin() ? 1 : 0);
-        result = 31 * result + (getPositions() != null ? getPositions().hashCode() : 0);
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getAttendedMatches() != null ? getAttendedMatches().hashCode() : 0);
-        result = 31 * result + (getStatistics() != null ? getStatistics().hashCode() : 0);
-        return result;
-    }
-
-    public void addAttendedMatch(Match m){
-
+        return name.hashCode();
     }
 }

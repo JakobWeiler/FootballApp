@@ -1,9 +1,18 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
-import android.os.Bundle;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
+
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
+import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 
 /**
  * Auhtor: Pascal
@@ -12,32 +21,66 @@ import java.sql.Date;
 
 public class Database {
     private Player currentPlayer = null;
-    private ArrayList<Match> matches = null;
-    private ArrayList<Player> players = null;
-    private static Database singeltonDB = null;
+    private static Database singletonDB = null;
+    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";    //intern: 192.168.142.143   extern: 212.152.179.116
+    private Gson gson;
+    private ArrayList<Player> allPlayers = null;
+    private ControllerPlayer controllerPlayer = null;
 
     public static Database newInstance(){
-        if(singeltonDB == null){
-            singeltonDB = new Database();
+        if(singletonDB == null){
+            singletonDB = new Database();
         }
 
-        return  singeltonDB;
+        return  singletonDB;
     }
 
     private Database(){
-        matches = new ArrayList<Match>();
-        players = new ArrayList<Player>();
+        gson = new Gson();
     }
 
+    //TODO: implement addMatch
     public void addMatch(Match match){
-        matches.add(match);
+
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
+    public void addPlayer(Player player)throws Exception{
+
+        controllerPlayer = new ControllerPlayer();
+
+        Object paras[] = new Object[3];
+        paras[0] = "POST";
+        paras[1] = "/player";
+        paras[2] = player;
+
+        controllerPlayer.execute(paras);
+        //Method, URL, value, ...(parametersQuery)
+
+        if(!(controllerPlayer.get()).equals("200")){
+            throw new Exception("webservice problem --add");
+        }
     }
 
+    public void removePlayer(int id, String name) throws Exception {
+        controllerPlayer = new ControllerPlayer();
+
+        String paras[] = new String[3];
+        paras[0] = "DELETE";
+        paras[1] = "/player";
+        paras[2] = Integer.toString(id);
+
+        controllerPlayer.execute(paras);
+
+        if(!(controllerPlayer.get()).equals("200")){
+            throw new Exception("webservice problem --remove");
+        }
+
+        allPlayers.remove(new Player(name));
+    }
+
+    //TODO: implement getMatch
     public Match getMatch(Date date){
+        return null;
         //TODO: implement get (depends on the collection type)
         //current implementation for ArrayList
         int i;
@@ -51,10 +94,48 @@ public class Database {
         return matches.get(i - 1);
     }
 
+    //TODO: implement getPlayer
     public Player getPlayer(int id){
-        //TODO: implement get (depends on the collection type)
         return null;
     }
 
+    public void loadAllPlayers() throws Exception {
 
+        controllerPlayer = new ControllerPlayer();
+
+        String paras[] = new String[2];
+        paras[0] = "GET";
+        paras[1] = "/player";
+        controllerPlayer.execute(paras);
+        final String result = controllerPlayer.get();
+
+        if(result == null){
+            throw new Exception("webservice problem --getAllPlayers");
+        }
+
+
+}
+
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                Type playerListType = new TypeToken<ArrayList<Player>>(){}.getType();
+                allPlayers = gson.fromJson(result, playerListType);
+            }
+        });
+
+        t.start();
+        t.join();
+    }
+
+    public ArrayList<Player> getAllPlayers() {
+        return allPlayers;
+    }
+
+    public boolean nameUsed(String name){
+        return allPlayers.contains(new Player(name));
+    }
+
+    public static String getUrl(){
+        return URL;
+    }
 }
