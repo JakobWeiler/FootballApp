@@ -66,21 +66,21 @@ public class MainActivity extends AppCompatActivity
 
         spMatch.setAdapter(adapterMatch);
 
-
-        Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
-        ArrayAdapter<Player> adapterPlayer;
         try {
-            adapterPlayer = new ArrayAdapter<Player>(
-                    this,
-                    android.R.layout.simple_spinner_item,
-                    db.getAllPlayers()
-            );
-
-            spPlayer.setAdapter(adapterPlayer);
-
+            db.loadAllPlayers();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
+        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
+                this,
+                android.R.layout.simple_spinner_item,
+                db.getAllPlayers()
+        );
+
+        spPlayer.setAdapter(adapterPlayer);
+
     }
 
     @Override

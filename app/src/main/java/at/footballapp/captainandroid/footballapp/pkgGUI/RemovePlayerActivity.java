@@ -12,26 +12,33 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import at.footballapp.captainandroid.footballapp.R;
+import at.footballapp.captainandroid.footballapp.pkgData.Database;
+import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class RemovePlayerActivity extends AppCompatActivity {
+    private Database db = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_player);
+        db = Database.newInstance();
 
         final ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
-        ArrayList<String> player = new ArrayList<String>();
-        player.add("Player");
-        player.add("Some players");
-        ArrayAdapter<String> adapterPlayer = new ArrayAdapter<String>(
+
+        try {
+            db.loadAllPlayers();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
                 this,
                 android.R.layout.simple_spinner_item,
-                player
+                db.getAllPlayers()
         );
 
         lvPlayer.setAdapter(adapterPlayer);
-
 
         lvPlayer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -40,10 +47,11 @@ public class RemovePlayerActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 // ListView Clicked item value
-                String  itemValue    = (String) lvPlayer.getItemAtPosition(position);
+                Player item = (Player) lvPlayer.getItemAtPosition(position);
 
                 Intent intent = new Intent(RemovePlayerActivity.this, RemoveDialogActivity.class);
-                intent.putExtra("selectedItem", itemValue);
+                intent.putExtra("selectedItem", item.toString());
+                intent.putExtra("id", item.getId());
                 startActivity(intent);
 
 

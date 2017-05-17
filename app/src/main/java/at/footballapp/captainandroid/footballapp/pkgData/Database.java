@@ -60,6 +60,23 @@ public class Database {
         }
     }
 
+    public void removePlayer(int id, String name) throws Exception {
+        controllerPlayer = new ControllerPlayer();
+
+        String paras[] = new String[3];
+        paras[0] = "DELETE";
+        paras[1] = "/player";
+        paras[2] = Integer.toString(id);
+
+        controllerPlayer.execute(paras);
+
+        if(!(controllerPlayer.get()).equals("200")){
+            throw new Exception("webservice problem --remove");
+        }
+
+        allPlayers.remove(new Player(name));
+    }
+
     //TODO: implement getMatch
     public Match getMatch(Date date){
         return null;
@@ -70,7 +87,7 @@ public class Database {
         return null;
     }
 
-    public ArrayList<Player> getAllPlayers() throws Exception {
+    public void loadAllPlayers() throws Exception {
 
         controllerPlayer = new ControllerPlayer();
 
@@ -93,7 +110,9 @@ public class Database {
 
         t.start();
         t.join();
+    }
 
+    public ArrayList<Player> getAllPlayers() {
         return allPlayers;
     }
 
