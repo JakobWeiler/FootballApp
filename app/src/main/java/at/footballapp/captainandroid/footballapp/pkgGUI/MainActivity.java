@@ -30,7 +30,7 @@ import at.footballapp.captainandroid.footballapp.pkgData.Match;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, RemoveDialogActivity.OnPlayerRemovedListener {
 
     ControllerPlayer controller = null;
     Database db = null;
@@ -72,6 +72,12 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
+        setAdapterSpinnerPlayer();
+
+        RemoveDialogActivity.addOnPlayerRemovedListener(this);
+    }
+
+    private void setAdapterSpinnerPlayer() {
         Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
         ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
                 this,
@@ -80,7 +86,6 @@ public class MainActivity extends AppCompatActivity
         );
 
         spPlayer.setAdapter(adapterPlayer);
-
     }
 
     @Override
@@ -127,4 +132,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void handlePlayerRemoved() {
+        setAdapterSpinnerPlayer();
+    }
 }

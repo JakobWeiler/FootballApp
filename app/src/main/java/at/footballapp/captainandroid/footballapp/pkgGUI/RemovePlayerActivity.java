@@ -26,19 +26,7 @@ public class RemovePlayerActivity extends AppCompatActivity {
 
         final ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
 
-        try {
-            db.loadAllPlayers();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
-                this,
-                android.R.layout.simple_spinner_item,
-                db.getAllPlayers()
-        );
-
-        lvPlayer.setAdapter(adapterPlayer);
+        setAdapterLvPlayer();
 
         lvPlayer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -50,13 +38,30 @@ public class RemovePlayerActivity extends AppCompatActivity {
                 Player item = (Player) lvPlayer.getItemAtPosition(position);
 
                 Intent intent = new Intent(RemovePlayerActivity.this, RemoveDialogActivity.class);
-                intent.putExtra("selectedItem", item.toString());
                 intent.putExtra("id", item.getId());
+                intent.putExtra("name", item.getName());
+                intent.putExtra("goalDifference", item.getGoalDifference());
                 startActivity(intent);
-
 
             }
 
         });
+    }
+
+    private void setAdapterLvPlayer() {
+        ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
+        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
+                this,
+                android.R.layout.simple_spinner_item,
+                db.getAllPlayers()
+        );
+
+        lvPlayer.setAdapter(adapterPlayer);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAdapterLvPlayer();
     }
 }
