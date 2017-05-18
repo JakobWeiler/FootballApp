@@ -1,7 +1,7 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Authors: P. L. Lagger, C. P. Wutti

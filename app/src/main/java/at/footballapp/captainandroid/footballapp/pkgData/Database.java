@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
@@ -25,6 +25,8 @@ public class Database {
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
     private ControllerPlayer controllerPlayer = null;
+    private ArrayList<Match> matches = null;
+
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -36,11 +38,12 @@ public class Database {
 
     private Database(){
         gson = new Gson();
+        matches = new ArrayList<Match>();
     }
 
     //TODO: implement addMatch
     public void addMatch(Match match){
-
+        matches.add(match);
     }
 
     public void addPlayer(Player player)throws Exception{
@@ -79,7 +82,17 @@ public class Database {
 
     //TODO: implement getMatch
     public Match getMatch(Date date){
-        return null;
+        //TODO: implement get (depends on the collection type)
+        //current implementation for ArrayList
+        int i;
+        boolean objectFound = false;
+
+
+        for(i = 0; !objectFound; i++)
+            if(date.equals(matches.get(i).getDate()))
+                objectFound = true;
+
+        return matches.get(i - 1);
     }
 
     //TODO: implement getPlayer
@@ -107,6 +120,7 @@ public class Database {
                 allPlayers = gson.fromJson(result, playerListType);
             }
         });
+
 
         t.start();
         t.join();
