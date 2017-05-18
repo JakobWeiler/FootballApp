@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
@@ -21,10 +21,12 @@ import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";    //intern: 192.168.142.143   extern: 212.152.179.116
+    private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";    //intern: 192.168.142.143   extern: 212.152.179.116
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
     private ControllerPlayer controllerPlayer = null;
+    private ArrayList<Match> matches = null;
+
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -36,11 +38,12 @@ public class Database {
 
     private Database(){
         gson = new Gson();
+        matches = new ArrayList<Match>();
     }
 
     //TODO: implement addMatch
     public void addMatch(Match match){
-
+        matches.add(match);
     }
 
     public void addPlayer(Player player)throws Exception{
@@ -60,9 +63,36 @@ public class Database {
         }
     }
 
+    public void removePlayer(int id, String name) throws Exception {
+        controllerPlayer = new ControllerPlayer();
+
+        String paras[] = new String[3];
+        paras[0] = "DELETE";
+        paras[1] = "/player";
+        paras[2] = Integer.toString(id);
+
+        controllerPlayer.execute(paras);
+
+        if(!(controllerPlayer.get()).equals("200")){
+            throw new Exception("webservice problem --remove");
+        }
+
+        allPlayers.remove(new Player(name));
+    }
+
     //TODO: implement getMatch
     public Match getMatch(Date date){
-        return null;
+        //TODO: implement get (depends on the collection type)
+        //current implementation for ArrayList
+        int i;
+        boolean objectFound = false;
+
+
+        for(i = 0; !objectFound; i++)
+            if(date.equals(matches.get(i).getDate()))
+                objectFound = true;
+
+        return matches.get(i - 1);
     }
 
     //TODO: implement getPlayer
@@ -70,7 +100,7 @@ public class Database {
         return null;
     }
 
-    public ArrayList<Player> getAllPlayers() throws Exception {
+    public void loadAllPlayers() throws Exception {
 
         controllerPlayer = new ControllerPlayer();
 
@@ -91,9 +121,12 @@ public class Database {
             }
         });
 
+
         t.start();
         t.join();
+    }
 
+    public ArrayList<Player> getAllPlayers() {
         return allPlayers;
     }
 

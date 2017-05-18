@@ -1,4 +1,8 @@
 <resources>
+    <!-- dialogTheme -->
+    <style name="DialogButtonTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">#A2A5AC</item>
+    </style>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">

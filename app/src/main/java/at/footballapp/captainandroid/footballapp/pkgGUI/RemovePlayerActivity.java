@@ -12,26 +12,21 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import at.footballapp.captainandroid.footballapp.R;
+import at.footballapp.captainandroid.footballapp.pkgData.Database;
+import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class RemovePlayerActivity extends AppCompatActivity {
+    private Database db = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_player);
+        db = Database.newInstance();
 
         final ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
-        ArrayList<String> player = new ArrayList<String>();
-        player.add("Player");
-        player.add("Some players");
-        ArrayAdapter<String> adapterPlayer = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_spinner_item,
-                player
-        );
 
-        lvPlayer.setAdapter(adapterPlayer);
-
+        setAdapterLvPlayer();
 
         lvPlayer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -40,15 +35,33 @@ public class RemovePlayerActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 // ListView Clicked item value
-                String  itemValue    = (String) lvPlayer.getItemAtPosition(position);
+                Player item = (Player) lvPlayer.getItemAtPosition(position);
 
                 Intent intent = new Intent(RemovePlayerActivity.this, RemoveDialogActivity.class);
-                intent.putExtra("selectedItem", itemValue);
+                intent.putExtra("id", item.getId());
+                intent.putExtra("name", item.getName());
+                intent.putExtra("goalDifference", item.getGoalDifference());
                 startActivity(intent);
-
 
             }
 
         });
+    }
+
+    private void setAdapterLvPlayer() {
+        ListView lvPlayer = (ListView) findViewById(R.id.lvPlayer);
+        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
+                this,
+                android.R.layout.simple_spinner_item,
+                db.getAllPlayers()
+        );
+
+        lvPlayer.setAdapter(adapterPlayer);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAdapterLvPlayer();
     }
 }

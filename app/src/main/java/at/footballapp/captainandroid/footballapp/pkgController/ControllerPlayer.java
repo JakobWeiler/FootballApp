@@ -60,23 +60,27 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     //get player /player/auth
                 }
             } else if (command[0].equals("DELETE")){
+                url = new URL(URL + command[1] + "?id=" + command[2]);
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("DELETE");
+
+                response = Integer.toString(urlConnection.getResponseCode());
 
             } else if (command[0].equals("GET")){
-                if (command[1].equals("/player")) { //get all players
-                    url = new URL(URL + command[1]);
-                    URLConnection conn = url.openConnection();
+                url = new URL(URL + command[1]);
+                URLConnection conn = url.openConnection();
 
-                    reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    String line = null;
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
 
-                    while((line = reader.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    response = sb.toString();
-                    reader.close();
+                while((line = reader.readLine()) != null) {
+                    sb.append(line);
                 }
+
+                response = sb.toString();
+                reader.close();
 
             } else if (command[0].equals("PUT")){
                 //update player

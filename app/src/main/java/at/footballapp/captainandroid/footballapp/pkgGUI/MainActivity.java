@@ -1,5 +1,6 @@
 package at.footballapp.captainandroid.footballapp.pkgGUI;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -15,13 +16,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
+import javautil.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
@@ -30,7 +33,7 @@ import at.footballapp.captainandroid.footballapp.pkgData.Match;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, RemoveDialogActivity.OnPlayerRemovedListener {
 
     ControllerPlayer controller = null;
     Database db = null;
@@ -66,21 +69,26 @@ public class MainActivity extends AppCompatActivity
 
         spMatch.setAdapter(adapterMatch);
 
-
-        Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
-        ArrayAdapter<Player> adapterPlayer;
         try {
-            adapterPlayer = new ArrayAdapter<Player>(
-                    this,
-                    android.R.layout.simple_spinner_item,
-                    db.getAllPlayers()
-            );
-
-            spPlayer.setAdapter(adapterPlayer);
-
+            db.loadAllPlayers();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        setAdapterSpinnerPlayer();
+
+        RemoveDialogActivity.addOnPlayerRemovedListener(this);
+    }
+
+    private void setAdapterSpinnerPlayer() {
+        Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
+        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
+                this,
+                android.R.layout.simple_spinner_item,
+                db.getAllPlayers()
+        );
+
+        spPlayer.setAdapter(adapterPlayer);
     }
 
     @Override
@@ -91,6 +99,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -111,6 +120,9 @@ public class MainActivity extends AppCompatActivity
             Spinner spMatch = (Spinner) findViewById(R.id.spMatch);
             intent.putExtra("intentMatchId", ((Match)spMatch.getSelectedItem()).getId());
             startActivity(intent);*/
+            Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
+            intent.putExtra("ADDMATCH", "ADDMATCH");
+            startActivity(intent);
         } else if (id == R.id.nav_removeMatch) {
             startActivity(new Intent(MainActivity.this, RemoveMatchActivity.class));
         } else if (id == R.id.nav_updateMatch) {
@@ -127,4 +139,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void handlePlayerRemoved() {
+        setAdapterSpinnerPlayer();
+    }
 }
