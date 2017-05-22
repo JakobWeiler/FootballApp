@@ -27,6 +27,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
 
     private boolean isAdd = false;
     private DatePicker dpDatePicker = null;
+    private Button btnStatistic = null;
     private Button btnEditTeam = null;
     private Button btnSave = null;
     private EditText etScoreTeam1 = null;
@@ -57,6 +58,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
     private void getViews(){
         this.btnEditTeam = (Button)findViewById(R.id.btnEditTeam);
         this.btnSave = (Button)findViewById(R.id.btnSave);
+        this.btnStatistic = (Button) findViewById(R.id.btnStatistic);
         this.dpDatePicker = (DatePicker) findViewById(R.id.datePicker);
         this.etScoreTeam1 = (EditText) findViewById(R.id.editText3);
         this.etScoreTeam2 = (EditText) findViewById(R.id.editText4);
@@ -68,6 +70,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
 
         if(isAdd){
             btnEditTeam.setVisibility(View.GONE);
+            btnStatistic.setVisibility(View.GONE);
             etScoreTeam1.setVisibility(View.GONE);
             etScoreTeam2.setVisibility(View.GONE);
             tvScoreTeam1.setVisibility(View.GONE);

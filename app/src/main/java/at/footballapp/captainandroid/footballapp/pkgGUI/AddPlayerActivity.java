@@ -7,6 +7,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class AddPlayerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_player);
     }
@@ -37,7 +39,7 @@ public class AddPlayerActivity extends Activity {
         Matcher m = p.matcher(txtUsername.getText().toString());
         String msg = "ok";
 
-        if (txtPassword.length() >= 5 && txtUsername.length() >= 5) {
+        if (txtPassword.length() >= 5) {
             if(!Database.newInstance().nameUsed(txtUsername.getText().toString())){
                 if ((txtPassword.getText().toString()).compareTo(txtCPassword.getText().toString()) == 0) {
                     if (!m.matches()) {
@@ -50,14 +52,14 @@ public class AddPlayerActivity extends Activity {
                 msg = "Username is already used !";
             }
         } else {
-            msg = "Username or password is too short ! (min. 5 chars)";
+            msg = "Password is too short ! (min. 5 chars)";
         }
 
         if (msg.compareTo("ok") == 0) {
             try {
                 Database.newInstance().addPlayer(new Player(txtUsername.getText().toString(),
                         txtPassword.getText().toString(),
-                        isAdmin.isChecked()));
+                        isAdmin.isChecked() ? 1 : 0));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally{

@@ -1,5 +1,6 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -28,6 +29,7 @@ public class Database {
     private ControllerPlayer controllerPlayer = null;
     private ArrayList<Match> matches = null;
     private ControllerMatch controllerMatch = null;
+    private SharedPreferences sp;
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -43,7 +45,7 @@ public class Database {
     }
 
     //TODO: implement addMatch
-    /*public void addMatch(Match match){
+    public void addMatch(Match match){
         matches.add(match);
     }*/
 
@@ -140,6 +142,20 @@ public class Database {
 
         t.start();
         t.join();
+    }
+
+    public boolean authUser(Player p)throws Exception{
+        controllerPlayer = new ControllerPlayer();
+        Log.d("output", p.toString());
+        Object paras[] = new Object[3];
+        paras[0] = "POST";
+        paras[1] = "/player/auth";
+        paras[2] = p;
+
+        controllerPlayer.execute(paras);
+        currentPlayer = gson.fromJson(controllerPlayer.get(), Player.class);
+
+        return (currentPlayer.getId() != -1);
     }
 
     public ArrayList<Player> getAllPlayers() {

@@ -11,7 +11,7 @@
         android:right="1dp"
         >
         <shape android:shape="rectangle">
-            <solid android:color="@color/defaultBackground"/>
+            <solid android:color="#B50D03"/>
         </shape>
     </item>
 </layer-list>
