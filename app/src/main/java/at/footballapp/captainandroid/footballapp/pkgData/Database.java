@@ -1,5 +1,6 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -8,10 +9,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
-import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 
 /**
  * Auhtor: Pascal
@@ -21,12 +20,13 @@ import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";    //intern: 192.168.142.143   extern: 212.152.179.116
+    // private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
+    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
     private ControllerPlayer controllerPlayer = null;
     private ArrayList<Match> matches = null;
-
+    private SharedPreferences sp;
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -124,6 +124,20 @@ public class Database {
 
         t.start();
         t.join();
+    }
+
+    public boolean authUser(Player p)throws Exception{
+        controllerPlayer = new ControllerPlayer();
+        Log.d("output", p.toString());
+        Object paras[] = new Object[3];
+        paras[0] = "POST";
+        paras[1] = "/player/auth";
+        paras[2] = p;
+
+        controllerPlayer.execute(paras);
+        currentPlayer = gson.fromJson(controllerPlayer.get(), Player.class);
+
+        return (currentPlayer.getId() != -1);
     }
 
     public ArrayList<Player> getAllPlayers() {

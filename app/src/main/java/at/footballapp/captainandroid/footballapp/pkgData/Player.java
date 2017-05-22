@@ -34,9 +34,8 @@ public class Player implements Serializable{
     public Player(){}
     
     public Player(int id, String name, String pw, int isAdmin, int wins, int tieds, int losses, int goalDifference) {
+        this(name, pw, isAdmin);
         this.id = id;
-        this.name = name;
-        this.password = pw;
         this.isAdmin = isAdmin;
         this.wins = wins;
         this.tieds = tieds;
@@ -47,20 +46,19 @@ public class Player implements Serializable{
         this.statistics = new HashMap<Integer, Statistic>();
     }
 
-    public Player(String name, String pw, boolean isAdmin){
-        this.name = name;
-        this.password = pw;
-        this.id = -1;
-
-        if(isAdmin){
-            this.isAdmin = 1;
-        } else {
-            this.isAdmin = 0;
-        }
+    public Player(String name, String pw, int isAdmin){
+        this(name, pw);
+        this.isAdmin = isAdmin;
     }
 
     public Player(String name ){
         this.name = name;
+    }
+
+    public Player (String name, String pw){
+        this(name);
+        this.password = pw;
+        this.id = -1;
     }
 
     public int getId() {
