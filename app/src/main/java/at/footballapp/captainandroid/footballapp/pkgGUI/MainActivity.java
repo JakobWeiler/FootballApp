@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import javautil.concurrent.ExecutionException;
+import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
