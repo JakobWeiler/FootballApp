@@ -45,7 +45,7 @@ public class Database {
     }
 
     //TODO: implement addMatch
-    public void addMatch(Match match){
+    /*public void addMatch(Match match){
         matches.add(match);
     }*/
 
