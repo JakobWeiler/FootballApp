@@ -9,8 +9,11 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.concurrent.ExecutionException;
 
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerMatch;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
+import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 
 /**
  * Auhtor: Pascal
@@ -20,12 +23,12 @@ import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    // private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
-    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
+    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";    //intern: 192.168.142.143   extern: 212.152.179.116
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
     private ControllerPlayer controllerPlayer = null;
     private ArrayList<Match> matches = null;
+    private ControllerMatch controllerMatch = null;
     private SharedPreferences sp;
 
     public static Database newInstance(){
@@ -42,8 +45,23 @@ public class Database {
     }
 
     //TODO: implement addMatch
-    public void addMatch(Match match){
+    /*public void addMatch(Match match){
         matches.add(match);
+    }*/
+
+    public void addMatch(Match match) throws Exception{
+        controllerMatch = new ControllerMatch();
+
+        Object paras[] = new Object[3];
+        paras[0] = "POST";
+        paras[1] = "/match";
+        paras[2] = match;
+
+        controllerMatch.execute(paras);
+
+        if(!(controllerMatch.get()).equals("200")){
+            throw new Exception("Webservice problem --add match");
+        }
     }
 
     public void addPlayer(Player player)throws Exception{
@@ -89,7 +107,7 @@ public class Database {
 
 
         for(i = 0; !objectFound; i++)
-            if(date.equals(matches.get(i).getDate()))
+            if(date.equals(matches.get(i).getFirmDate()))
                 objectFound = true;
 
         return matches.get(i - 1);

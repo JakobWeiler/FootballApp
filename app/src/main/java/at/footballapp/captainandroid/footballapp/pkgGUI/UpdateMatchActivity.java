@@ -10,13 +10,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Match;
+import at.footballapp.captainandroid.footballapp.pkgData.Player;
 import at.footballapp.captainandroid.footballapp.pkgHelp.SqlDateHelper;
 
 public class UpdateMatchActivity extends AppCompatActivity {
@@ -88,7 +91,15 @@ public class UpdateMatchActivity extends AppCompatActivity {
         if(isAdd){
 
             java.sql.Date dateOfMatch = null;
-            try{dateOfMatch = SqlDateHelper.getDate((dpDatePicker.getDayOfMonth()+"-"+dpDatePicker.getMonth()+"-"+dpDatePicker.getYear()));}catch(Exception e){/*there is literally no fucking way we get an exception here*/}
+
+            Calendar dateOfCurrentMatch = Calendar.getInstance();
+
+            dateOfCurrentMatch.set(Calendar.DAY_OF_MONTH, dpDatePicker.getDayOfMonth());
+            dateOfCurrentMatch.set(Calendar.MONTH, dpDatePicker.getMonth());
+            dateOfCurrentMatch.set(Calendar.YEAR, dpDatePicker.getYear());
+            dateOfCurrentMatch.add(Calendar.MONTH, 1);
+
+            try{dateOfMatch = SqlDateHelper.getDate((dateOfCurrentMatch.get(Calendar.DAY_OF_MONTH)+"-"+dateOfCurrentMatch.get(Calendar.MONTH)+"-"+dateOfCurrentMatch.get(Calendar.YEAR)));}catch(Exception e){/*there is literally no fucking way we get an exception here*/}
 
 
             //Calendar Stuff
@@ -100,15 +111,17 @@ public class UpdateMatchActivity extends AppCompatActivity {
             calendar.set(Calendar.DAY_OF_MONTH, dpDatePicker.getDayOfMonth());
             calendar.set(Calendar.MONTH, dpDatePicker.getMonth());
             calendar.set(Calendar.YEAR, dpDatePicker.getYear());
-
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
             //
 
             if(!calendar.getTime().before(today)){
                 try{displayDateIsInTheFutureError(dateOfMatch);}catch(Exception e){/*NO FUCKING WAY I AM TELLING YOU*/}
             }else{
-                db.addMatch(new Match(-1,dateOfMatch, 0,0,null,null));
-
-
+                try {
+                    db.addMatch(new Match(-1,SqlDateHelper.dateToString(dateOfMatch), 0,0,new ArrayList<Player>(),new ArrayList<Player>()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 Intent intent = new Intent(UpdateMatchActivity.this, EditTeamActivity.class);
                 try{intent.putExtra("date", SqlDateHelper.dateToString(dateOfMatch));}catch(Exception e){/*no fucking way again*/}
@@ -122,8 +135,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
 
     private void displayDateIsInTheFutureError(java.sql.Date dateWhichIsInTheFuture) throws Exception{
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogButtonTheme);
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogButtonTheme);
 
         builder.setMessage(String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one."));
 
@@ -132,11 +144,11 @@ public class UpdateMatchActivity extends AppCompatActivity {
 
             }
         });
+        */
+        Toast.makeText(this,String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one.") , Toast.LENGTH_SHORT).show();
 
-
-
-        AlertDialog dialog  = builder.create();
+        /*AlertDialog dialog  = builder.create();
         dialog.show();
-
+        */
     }
 }
