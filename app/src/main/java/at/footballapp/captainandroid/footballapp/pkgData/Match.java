@@ -1,35 +1,38 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.sql.Date;
+
+import at.footballapp.captainandroid.footballapp.pkgHelp.SqlDateHelper;
 
 /**
  * Authors: P. L. Lagger, C. P. Wutti
  * Date: 23.03.2017
  */
 
-public class Match {
+public class Match implements Serializable{
     private int id = -1;
-    private Date date = null;
+    private String firmDate = null;
     private int goalsA;
     private int goalsB;
-    private ArrayList<Player> teamA = null;
-    private ArrayList<Player> teamB = null;
+    private transient ArrayList<Player> teamA = null;
+    private transient ArrayList<Player> teamB = null;
 
     /**
      * author: C. P. Wutti
      * Main constructor
      * @param _id
-     * @param _date
+     * @param _firmDate
      * @param _goalsA
      * @param _goalsB
      * @param _teamA
      * @param _teamB
      */
-    public Match(int _id, Date _date, int _goalsA, int _goalsB, ArrayList<Player> _teamA, ArrayList<Player> _teamB){
+    public Match(int _id, String _firmDate, int _goalsA, int _goalsB, ArrayList<Player> _teamA, ArrayList<Player> _teamB){
         super();
         setId(_id);
-        setDate(_date);
+        setFirmDate(_firmDate);
         setGoalsA(_goalsA);
         setGoalsB(_goalsB);
         setTeamA(_teamA);
@@ -51,12 +54,12 @@ public class Match {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public String getFirmDate() {
+        return firmDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setFirmDate(String firmDate) {
+        try{this.firmDate = SqlDateHelper.dateToString(SqlDateHelper.getDate(firmDate), "yyyy-mm-dd");}catch (Exception e){/*no way*/}
     }
 
     public int getGoalsA() {
@@ -101,7 +104,7 @@ public class Match {
         if (getId() != match.getId()) return false;
         if (getGoalsA() != match.getGoalsA()) return false;
         if (getGoalsB() != match.getGoalsB()) return false;
-        if (getDate() != null ? !getDate().equals(match.getDate()) : match.getDate() != null)
+        if (getFirmDate() != null ? !getFirmDate().equals(match.getFirmDate()) : match.getFirmDate() != null)
             return false;
         if (getTeamA() != null ? !getTeamA().equals(match.getTeamA()) : match.getTeamA() != null)
             return false;
@@ -116,7 +119,7 @@ public class Match {
     @Override
     public int hashCode() {
         int result = getId();
-        result = 31 * result + (getDate() != null ? getDate().hashCode() : 0);
+        result = 31 * result + (getFirmDate() != null ? getFirmDate().hashCode() : 0);
         result = 31 * result + getGoalsA();
         result = 31 * result + getGoalsB();
         result = 31 * result + (getTeamA() != null ? getTeamA().hashCode() : 0);
