@@ -57,7 +57,34 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     os.close();
                     urlConnection.disconnect();
                 } else {
-                    //get player /player/auth
+                    String newPlayer = gson.toJson(command[2]);
+
+                    url = new URL(URL + command[1]);
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+
+                    byte[] outputBytes = newPlayer.getBytes("UTF-8");
+                    urlConnection.setRequestProperty("Content-Length", Integer.toString(outputBytes.length));
+                    OutputStream os = urlConnection.getOutputStream();
+                    os.write(outputBytes);
+
+                    reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+
+                    while((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+
+                    response = sb.toString();
+
+                    //response = Integer.toString(urlConnection.getResponseCode());
+                    os.flush();
+                    os.close();
+                    reader.close();
+                    urlConnection.disconnect();
                 }
             } else if (command[0].equals("DELETE")){
                 url = new URL(URL + command[1] + "?id=" + command[2]);
