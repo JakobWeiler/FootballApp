@@ -39,8 +39,6 @@ public class ControllerMatch extends AsyncTask<Object, Void, Object> {
                 if(command[1].equals("/match")){
                     String newMatch = gson.toJson(command[2]);
 
-                    Log.d("matchAdding", newMatch);
-
                     url = new URL(URL + command[1]);
 
                     HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
@@ -53,7 +51,15 @@ public class ControllerMatch extends AsyncTask<Object, Void, Object> {
                     OutputStream os = urlConnection.getOutputStream();
                     os.write(outputBytes);
 
-                    response = Integer.toString(urlConnection.getResponseCode());
+                    reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+
+                    while((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+
+                    response = sb.toString();
 
                     os.flush();
                     os.close();
