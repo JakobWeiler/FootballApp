@@ -17,7 +17,6 @@ import java.net.URLConnection;
 
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 
-
 /**
  * Auhtor: Pascal
  * Date: 03.05.2017
@@ -29,9 +28,9 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
 
     @Override
     protected String doInBackground(Object... command) {    //(Method, URL, value)
-        BufferedReader reader = null;
-        BufferedWriter writer = null;
-        URL url = null;
+        BufferedReader reader;
+        BufferedWriter writer;
+        URL url;
         String response = null;
         gson = new Gson();
 
@@ -51,10 +50,19 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     OutputStream os = urlConnection.getOutputStream();
                     os.write(outputBytes);
 
-                    response = Integer.toString(urlConnection.getResponseCode());
+                    reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+
+                    while((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+
+                    response = sb.toString();
 
                     os.flush();
                     os.close();
+                    reader.close();
                     urlConnection.disconnect();
                 } else {
                     String newPlayer = gson.toJson(command[2]);
@@ -110,7 +118,7 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                 reader.close();
 
             } else if (command[0].equals("PUT")){
-                //update player
+                //TODO: implement update player
             }
         } catch(Exception ex){
             ex.printStackTrace();

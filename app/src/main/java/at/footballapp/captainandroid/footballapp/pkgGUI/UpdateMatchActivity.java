@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -43,13 +44,14 @@ public class UpdateMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_match);
 
-    //todo figure out a smart way of doing this
+    //TODO: figure out a smart way of doing this
         try{
-            if((this.getIntent().getExtras().getString("ADDMATCH")).equals("ADDMATCH"));
+            if((this.getIntent().getExtras().getString("ADDMATCH")).equals("ADDMATCH"))
             isAdd = true;
         }catch (Exception e){
-            //noException
+            Log.d("exception", e.getMessage());
         }
+
         getViews();
         db = Database.newInstance();
         prepare();
@@ -60,8 +62,8 @@ public class UpdateMatchActivity extends AppCompatActivity {
         this.btnSave = (Button)findViewById(R.id.btnSave);
         this.btnStatistic = (Button) findViewById(R.id.btnStatistic);
         this.dpDatePicker = (DatePicker) findViewById(R.id.datePicker);
-        this.etScoreTeam1 = (EditText) findViewById(R.id.editText3);
-        this.etScoreTeam2 = (EditText) findViewById(R.id.editText4);
+        this.etScoreTeam1 = (EditText) findViewById(R.id.txtScore1);
+        this.etScoreTeam2 = (EditText) findViewById(R.id.txtScore2);
         this.tvScoreTeam1 = (TextView) findViewById(R.id.textView);
         this.tvScoreTeam2 = (TextView) findViewById(R.id.textView2);
     }
@@ -129,13 +131,14 @@ public class UpdateMatchActivity extends AppCompatActivity {
             }
 
         }else{
-            //todo
+            //TODO: update usage
         }
     }
 
     private void displayDateIsInTheFutureError(java.sql.Date dateWhichIsInTheFuture) throws Exception{
 
-       /* AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogButtonTheme);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogButtonTheme);
 
         builder.setMessage(String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one."));
 
@@ -144,11 +147,10 @@ public class UpdateMatchActivity extends AppCompatActivity {
 
             }
         });
-        */
+
         Toast.makeText(this,String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one.") , Toast.LENGTH_SHORT).show();
 
-        /*AlertDialog dialog  = builder.create();
+        AlertDialog dialog  = builder.create();
         dialog.show();
-        */
     }
 }

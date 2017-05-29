@@ -1,6 +1,7 @@
 package at.footballapp.captainandroid.footballapp.pkgGUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,29 +16,31 @@ import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class LoginActivity extends AppCompatActivity {
-
-    Button btnLogin;
-    EditText txtUser;
-    EditText txtPasswd;
+    private Button btnLogin;
+    private EditText txtUser;
+    private EditText txtPasswd;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Intent i = new Intent(this, LoginActivity);
-        //startActivity(i);
+
+        if (getIntent().getBooleanExtra("EXIT", false)) {
+            finish();
+        }
+
+        try {
+            Database.newInstance().authUser(new Player(txtUser.getText().toString(), txtPasswd.getText().toString()));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_login);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
         txtUser = (EditText) findViewById(R.id.txtUser);
         txtPasswd = (EditText) findViewById(R.id.txtPassword);
-
-        //faster login during development
-       // txtUser.setText("-------");
-       // txtPasswd.setText("-------");
-
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-        }
     }
 
     public void onBtnLogin(View view) {

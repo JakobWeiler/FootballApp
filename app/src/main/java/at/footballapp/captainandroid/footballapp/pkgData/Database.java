@@ -24,8 +24,8 @@ import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
-    //private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
+    //private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
+    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
     private ArrayList<Occupation> occupations = null;
@@ -46,11 +46,7 @@ public class Database {
 
     private Database(){
         gson = new Gson();
-        matches = new ArrayList<Match>();
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+        matches = new ArrayList<>();
     }
 
     //TODO: implement addMatch
@@ -90,11 +86,7 @@ public class Database {
         controllerPlayer.execute(paras);
         //Method, URL, value, ...(parametersQuery)
 
-        if(!(controllerPlayer.get()).equals("200")){
-            throw new Exception("webservice problem --addPlayer");
-        }
-
-        allPlayers.add(player);
+        allPlayers.add(gson.fromJson(controllerPlayer.get(), Player.class));
     }
 
     public void removePlayer(int id, String name) throws Exception {
@@ -114,7 +106,7 @@ public class Database {
         allPlayers.remove(new Player(name));
     }
 
-    public void addOccupation(int playerId, String positionName)throws Exception{
+    private void addOccupation(int playerId, String positionName)throws Exception{
 
         controllerOccupation = new ControllerOccupation();
 
@@ -130,7 +122,7 @@ public class Database {
         }
     }
 
-    public void removeOccupation(int playerId, String positionName) throws Exception {
+    private void removeOccupation(int playerId, String positionName) throws Exception {
         controllerOccupation = new ControllerOccupation();
 
         Object paras[] = new Object[4];
@@ -189,13 +181,14 @@ public class Database {
             }
         });
 
+
         t.start();
         t.join();
 
         loadAllOccupations();
     }
 
-    public void loadAllOccupations() throws Exception {
+    private void loadAllOccupations() throws Exception {
         for (Player player : allPlayers) {
             loadOccupations(player);
         }
@@ -232,6 +225,8 @@ public class Database {
     }
 
     public boolean authUser(Player p)throws Exception{
+        boolean valid = false;
+
         controllerPlayer = new ControllerPlayer();
         Log.d("output", p.toString());
         Object paras[] = new Object[3];
@@ -253,11 +248,15 @@ public class Database {
         return allPlayers.contains(new Player(name));
     }
 
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+
     public static String getUrl(){
         return URL;
     }
 
-    public void setCurrentMatch(Match match){currentMatch = match;}
+    private void setCurrentMatch(Match match){currentMatch = match;}
 
     public Match getCurrentMatch(){return currentMatch;}
 }
