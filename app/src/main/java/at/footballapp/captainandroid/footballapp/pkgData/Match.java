@@ -126,4 +126,16 @@ public class Match implements Serializable{
         result = 31 * result + (getTeamB() != null ? getTeamB().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "id=" + id +
+                ", firmDate='" + firmDate + '\'' +
+                ", goalsA=" + goalsA +
+                ", goalsB=" + goalsB +
+                ", teamA=" + teamA +
+                ", teamB=" + teamB +
+                '}';
+    }
 }

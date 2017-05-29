@@ -34,6 +34,7 @@ public class Database {
     private ArrayList<Match> matches = null;
     private ControllerMatch controllerMatch = null;
     private SharedPreferences sp;
+    private Match currentMatch = null;
 
     public static Database newInstance(){
         if(singletonDB == null){
@@ -66,6 +67,11 @@ public class Database {
         paras[2] = match;
 
         controllerMatch.execute(paras);
+
+        Match m = gson.fromJson((controllerMatch.get().toString()), Match.class);
+
+        matches.add(m);
+        setCurrentMatch(m);
 
         if(!(controllerMatch.get()).equals("200")){
             throw new Exception("Webservice problem --add match");
@@ -153,7 +159,8 @@ public class Database {
             if(date.equals(matches.get(i).getFirmDate()))
                 objectFound = true;
 
-        return matches.get(i - 1);
+        //terrible solution
+         if(matches.size() >= 2) return matches.get(i - 1); else return new Match();
     }
 
     //TODO: implement getPlayer
@@ -184,10 +191,10 @@ public class Database {
 
         t.start();
         t.join();
-        
+
         loadAllOccupations();
     }
-    
+
     public void loadAllOccupations() throws Exception {
         for (Player player : allPlayers) {
             loadOccupations(player);
@@ -249,4 +256,8 @@ public class Database {
     public static String getUrl(){
         return URL;
     }
+
+    public void setCurrentMatch(Match match){currentMatch = match;}
+
+    public Match getCurrentMatch(){return currentMatch;}
 }
