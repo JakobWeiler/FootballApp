@@ -33,7 +33,7 @@ import at.footballapp.captainandroid.footballapp.pkgData.Match;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, RemoveDialogActivity.OnPlayerRemovedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, RemoveDialogActivity.OnPlayerRemovedListener, AddPlayerActivity.OnPlayerAddedListener {
 
     ControllerPlayer controller = null;
     Database db = null;
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         setAdapterSpinnerPlayer();
 
         RemoveDialogActivity.addOnPlayerRemovedListener(this);
+        AddPlayerActivity.addOnPlayerAddedListener(this);
     }
 
     private void setAdapterSpinnerPlayer() {
@@ -115,7 +116,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_removePlayer) {
             startActivity(new Intent(MainActivity.this, RemovePlayerActivity.class));
         } else if (id == R.id.nav_Profile) {
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
+            intent.putExtra("playerName", ((Player)spPlayer.getSelectedItem()).getName());
+            startActivity(intent);
         } else if (id == R.id.nav_addMatch) {
             //Database.newInstance().addMatch(new Match(todaysDate));   -->Select in spinner
             /*Intent intent = new Intent(MainActivity.this, UpdateMatchActivity.class);
@@ -134,6 +138,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_showMatch) {
             startActivity(new Intent(MainActivity.this, MatchActivity.class));
+        } else if (id == R.id.nav_showStatistic) {
+            startActivity(new Intent(MainActivity.this, StatisticActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -144,5 +150,28 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void handlePlayerRemoved() {
         setAdapterSpinnerPlayer();
+    }
+
+    @Override
+    public void handlePlayerAdded() {
+        setAdapterSpinnerPlayer();
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_menu = navigationView.getMenu();
+
+        if(db.getCurrentPlayer().getIsAdmin() == 0){
+            nav_menu.findItem(R.id.nav_addPlayer).setVisible(false);
+            nav_menu.findItem(R.id.nav_removePlayer).setVisible(false);
+            nav_menu.findItem(R.id.nav_addMatch).setVisible(false);
+            nav_menu.findItem(R.id.nav_removeMatch).setVisible(false);
+            nav_menu.findItem(R.id.nav_updateMatch).setVisible(false);
+        }
+        else {
+            nav_menu.findItem(R.id.nav_showStatistic).setVisible(false);
+        }
+        return true;
     }
 }
