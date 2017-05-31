@@ -73,9 +73,10 @@ public class Database {
         matches.add(m);
         setCurrentMatch(m);
 
-        if(!(controllerMatch.get()).equals("200")){
+        /*if(!(controllerMatch.get()).equals("200")){
+            Log.d("ERRORMATCH", controllerMatch.get().toString());
             throw new Exception("Webservice problem --add match");
-        }
+        }*/
     }
 
     public void addPlayer(Player player)throws Exception{

@@ -1,5 +1,7 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -44,7 +46,7 @@ public class Match implements Serializable{
      * defualt constructor
      */
     public Match(){
-        this(-1, null, 0, 0, null, null);
+        this(-1, null, 0, 0, new ArrayList<Player>(), new ArrayList<Player>());
     }
     public int getId() {
         return id;
@@ -137,5 +139,21 @@ public class Match implements Serializable{
                 ", teamA=" + teamA +
                 ", teamB=" + teamB +
                 '}';
+    }
+
+    public void addToTeamA(Player p) {
+        if(!teamA.contains(p)) teamA.add(p);
+    }
+
+    public void removeFromTeamB(Player p) {
+        if(teamB.contains(p)) teamB.remove(p);
+    }
+
+    public void addToTeamB(Player p) {
+        if(!teamB.contains(p))  teamB.add(p);
+    }
+
+    public void removeFromTeamA(Player p) {
+        if(teamA.contains(p)) teamA.remove(p);
     }
 }
