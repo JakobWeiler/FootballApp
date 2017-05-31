@@ -33,9 +33,6 @@
             android:name=".pkgGUI.EditTeamActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pkgGUI.StatisticActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".pkgGUI.MatchActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -48,10 +45,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".pkgGUI.AddPlayerActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".pkgGUI.RemoveDialogActivity"
-            android:theme="@android:style/Theme.Dialog"/>
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".pkgGUI.StatisticActivity"
+            android:label="@string/title_activity_statistic"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -31,11 +31,15 @@ public class Player implements Serializable{
     private transient ArrayList<Match> attendedMatches = null;
     private transient HashMap<Integer, Statistic> statistics = null;
 
-    public Player(){}
+    public Player(){
+        this.positions = new ArrayList<EnumPositions>();
+    }
     
     public Player(int id, String name, String pw, int isAdmin, int wins, int tieds, int losses, int goalDifference) {
         this(name, pw, isAdmin);
         this.id = id;
+        this.name = name;
+        this.password = pw;
         this.isAdmin = isAdmin;
         this.wins = wins;
         this.tieds = tieds;
@@ -49,16 +53,19 @@ public class Player implements Serializable{
     public Player(String name, String pw, int isAdmin){
         this(name, pw);
         this.isAdmin = isAdmin;
+        this.positions = new ArrayList<EnumPositions>();
     }
 
     public Player(String name ){
         this.name = name;
+        this.positions = new ArrayList<EnumPositions>();
     }
 
     public Player (String name, String pw){
         this(name);
         this.password = pw;
         this.id = -1;
+        this.positions = new ArrayList<EnumPositions>();
     }
 
     public int getId() {
@@ -125,6 +132,33 @@ public class Player implements Serializable{
 
     public void setGoalDifference(int goalDifference) {
         this.goalDifference = goalDifference;
+    }
+
+    public ArrayList<EnumPositions> getPositions() {
+        return positions;
+    }
+
+    public void addPosition(String positionName, boolean calledFromGet) throws Exception {
+        if (!positions.contains(EnumPositions.valueOf(positionName))) {
+            if (!calledFromGet) {
+                Database.newInstance().addOccupation(this.id, positionName);
+            }
+            positions.add(EnumPositions.valueOf(positionName));
+        }
+    }
+
+    public void removePosition(String positionName) throws Exception {
+        if (positions.contains(EnumPositions.valueOf(positionName))) {
+            Database.newInstance().removeOccupation(this.id, positionName);
+            positions.remove(EnumPositions.valueOf(positionName));
+        }
+    }
+
+    public void resetPositions() throws Exception {
+        removePosition("Goalkeeper");
+        removePosition("Defender");
+        removePosition("Midfielder");
+        removePosition("Striker");
     }
 
     @Override

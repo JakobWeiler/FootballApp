@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerMatch;
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerOccupation;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
 import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 
@@ -23,10 +24,13 @@ import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";    //intern: 192.168.142.143   extern: 212.152.179.116
+    private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
+    //private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
+    private ArrayList<Occupation> occupations = null;
     private ControllerPlayer controllerPlayer = null;
+    private ControllerOccupation controllerOccupation = null;
     private ArrayList<Match> matches = null;
     private ControllerMatch controllerMatch = null;
     private SharedPreferences sp;
@@ -44,6 +48,15 @@ public class Database {
         gson = new Gson();
         matches = new ArrayList<Match>();
     }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    //TODO: implement addMatch
+    /*public void addMatch(Match match){
+        matches.add(match);
+    }*/
 
     public void addMatch(Match match) throws Exception{
         controllerMatch = new ControllerMatch();
@@ -79,8 +92,10 @@ public class Database {
         //Method, URL, value, ...(parametersQuery)
 
         if(!(controllerPlayer.get()).equals("200")){
-            throw new Exception("webservice problem --add");
+            throw new Exception("webservice problem --addPlayer");
         }
+
+        allPlayers.add(player);
     }
 
     public void removePlayer(int id, String name) throws Exception {
@@ -94,10 +109,43 @@ public class Database {
         controllerPlayer.execute(paras);
 
         if(!(controllerPlayer.get()).equals("200")){
-            throw new Exception("webservice problem --remove");
+            throw new Exception("webservice problem --removePlayer");
         }
 
         allPlayers.remove(new Player(name));
+    }
+
+    public void addOccupation(int playerId, String positionName)throws Exception{
+
+        controllerOccupation = new ControllerOccupation();
+
+        Object paras[] = new Object[3];
+        paras[0] = "POST";
+        paras[1] = "/occupation";
+        paras[2] = new Occupation(playerId, positionName);
+
+        controllerOccupation.execute(paras);
+
+        if(!(controllerOccupation.get()).equals("200")){
+            throw new Exception("webservice problem --addOccupation");
+        }
+    }
+
+    public void removeOccupation(int playerId, String positionName) throws Exception {
+        controllerOccupation = new ControllerOccupation();
+
+        Object paras[] = new Object[4];
+        paras[0] = "DELETE";
+        paras[1] = "/occupation";
+        paras[2] = playerId;
+        paras[3] = positionName;
+
+        controllerOccupation.execute(paras);
+
+        if(!(controllerOccupation.get()).equals("200")){
+            throw new Exception("webservice problem --removeOccupation");
+        }
+
     }
 
     //TODO: implement getMatch
@@ -142,9 +190,46 @@ public class Database {
             }
         });
 
+        t.start();
+        t.join();
+
+        loadAllOccupations();
+    }
+
+    public void loadAllOccupations() throws Exception {
+        for (Player player : allPlayers) {
+            loadOccupations(player);
+        }
+    }
+
+    private void loadOccupations(Player player) throws Exception {
+        controllerOccupation = new ControllerOccupation();
+
+        String paras[] = new String[2];
+        paras[0] = "GET";
+        paras[1] = "/occupation/" + player.getId();
+        controllerOccupation.execute(paras);
+        final String result = controllerOccupation.get();
+
+        if(result == null){
+            throw new Exception("webservice problem --loadOccupations");
+        }
+
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                Type occupationsListType = new TypeToken<ArrayList<Occupation>>(){}.getType();
+                occupations = gson.fromJson(result, occupationsListType);
+            }
+        });
 
         t.start();
         t.join();
+
+        if (occupations.get(0).getPlayerId() != -1) {
+            for (Occupation o : occupations) {
+                player.addPosition(o.getPositionName(), true);
+            }
+        }
     }
 
     public boolean authUser(Player p)throws Exception{

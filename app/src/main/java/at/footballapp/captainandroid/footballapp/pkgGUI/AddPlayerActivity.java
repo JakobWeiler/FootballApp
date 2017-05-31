@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.EventListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,15 @@ import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
 public class AddPlayerActivity extends Activity {
+
+    public interface OnPlayerAddedListener extends EventListener {
+        void handlePlayerAdded();
+    }
+    private static OnPlayerAddedListener listener = null;   // MainActivity
+
+    public static void addOnPlayerAddedListener(OnPlayerAddedListener onPlayerAddedListener) {
+        listener = onPlayerAddedListener;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +70,8 @@ public class AddPlayerActivity extends Activity {
                 Database.newInstance().addPlayer(new Player(txtUsername.getText().toString(),
                         txtPassword.getText().toString(),
                         isAdmin.isChecked() ? 1 : 0));
+                if (listener != null)
+                    listener.handlePlayerAdded();
             } catch (Exception e) {
                 e.printStackTrace();
             } finally{
