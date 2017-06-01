@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -44,14 +43,13 @@ public class UpdateMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_match);
 
-    //TODO: figure out a smart way of doing this
+    //todo figure out a smart way of doing this
         try{
             if((this.getIntent().getExtras().getString("ADDMATCH")).equals("ADDMATCH"))
             isAdd = true;
         }catch (Exception e){
-            Log.d("exception", e.getMessage());
+            //noException
         }
-
         getViews();
         db = Database.newInstance();
         prepare();
@@ -62,14 +60,14 @@ public class UpdateMatchActivity extends AppCompatActivity {
         this.btnSave = (Button)findViewById(R.id.btnSave);
         this.btnStatistic = (Button) findViewById(R.id.btnStatistic);
         this.dpDatePicker = (DatePicker) findViewById(R.id.datePicker);
-        this.etScoreTeam1 = (EditText) findViewById(R.id.txtScore1);
-        this.etScoreTeam2 = (EditText) findViewById(R.id.txtScore2);
+        this.etScoreTeam1 = (EditText) findViewById(R.id.editText3);
+        this.etScoreTeam2 = (EditText) findViewById(R.id.editText4);
         this.tvScoreTeam1 = (TextView) findViewById(R.id.textView);
         this.tvScoreTeam2 = (TextView) findViewById(R.id.textView2);
     }
 
     private void prepare(){
-
+        /*Wutti*/
         if(isAdd){
             btnEditTeam.setVisibility(View.GONE);
             btnStatistic.setVisibility(View.GONE);
@@ -90,6 +88,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
     }
 
     public void onBtnSave(View view){
+        /*author: Wutti*/
         if(isAdd){
 
             java.sql.Date dateOfMatch = null;
@@ -131,26 +130,11 @@ public class UpdateMatchActivity extends AppCompatActivity {
             }
 
         }else{
-            //TODO: update usage
+            //todo
         }
     }
 
     private void displayDateIsInTheFutureError(java.sql.Date dateWhichIsInTheFuture) throws Exception{
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogButtonTheme);
-
-        builder.setMessage(String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one."));
-
-        builder.setPositiveButton(String.valueOf("Ok"), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-        });
-
         Toast.makeText(this,String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one.") , Toast.LENGTH_SHORT).show();
-
-        AlertDialog dialog  = builder.create();
-        dialog.show();
     }
 }

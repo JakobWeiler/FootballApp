@@ -77,6 +77,8 @@ public class ProfileActivity extends AppCompatActivity {
                 player.addPosition("Striker", false);
             else
                 player.removePosition("Striker");
+
+            this.finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,6 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
             cbDefender.setChecked(false);
             cbMidfielder.setChecked(false);
             cbStriker.setChecked(false);
+            this.finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
