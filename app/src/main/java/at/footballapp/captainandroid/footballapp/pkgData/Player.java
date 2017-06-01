@@ -88,8 +88,6 @@ public class Player implements Serializable{
         return password;
     }
 
-    public ArrayList<EnumPositions> getPositions(){ return positions;}
-
     public void setPassword(String password) {
         this.password = password;
     }
