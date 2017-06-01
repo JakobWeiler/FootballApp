@@ -134,10 +134,6 @@ public class Player implements Serializable{
         this.goalDifference = goalDifference;
     }
 
-    public ArrayList<EnumPositions> getPositions() {
-        return positions;
-    }
-
     public void addPosition(String positionName, boolean calledFromGet) throws Exception {
         if (!positions.contains(EnumPositions.valueOf(positionName))) {
             if (!calledFromGet) {
