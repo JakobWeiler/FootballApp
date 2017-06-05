@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerMatch;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerOccupation;
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerParticipation;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
 import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 
@@ -138,6 +139,24 @@ public class Database {
             throw new Exception("webservice problem --removeOccupation");
         }
 
+    }
+
+    public void addOrUpdateParticipation(Match m, boolean firstTime) throws Exception{
+        ControllerParticipation controllerPart = new ControllerParticipation();
+
+        Object paras[] = new Object[5];
+
+        if(firstTime){
+            paras[0] = "POST";
+            paras[1] = "/participation";
+            paras[2] = m;
+        }else{
+            paras[0] = "PUT";
+            paras[1] = "/participation";
+            paras[2] = m;
+        }
+
+        controllerPart.execute(paras);
     }
 
     //TODO: implement getMatch

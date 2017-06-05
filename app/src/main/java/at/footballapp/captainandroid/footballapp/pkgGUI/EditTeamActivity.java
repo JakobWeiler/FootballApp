@@ -14,6 +14,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import at.footballapp.captainandroid.footballapp.R;
@@ -38,13 +39,15 @@ public class EditTeamActivity extends AppCompatActivity {
     private TextView tvPositionHeader = null;
     private TextView tvTeam1 = null;
     private TextView tvTeam2 = null;
-
+    private boolean firstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_team);
         db = Database.newInstance();
+        firstTime = true;
+
 
         initViews();
         initOthers();
@@ -74,8 +77,13 @@ public class EditTeamActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(EditTeamActivity.this, UpdateMatchActivity.class);
-                //startActivity(intent);
+                try {
+                    db.addOrUpdateParticipation(db.getCurrentMatch(), firstTime);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(EditTeamActivity.this, UpdateMatchActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -89,7 +97,7 @@ public class EditTeamActivity extends AppCompatActivity {
 
     /*Wutti*/
     private void doTableStuff(){
-        EnumPositions[] positions = null;
+        ArrayList<EnumPositions> positions = null;
 
         try{
             Iterator<Player> it = db.getAllPlayers().iterator();
@@ -99,18 +107,7 @@ public class EditTeamActivity extends AppCompatActivity {
                 row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));  //Set layout for the row
                 final Player player = it.next();
 
-                // Todo fix -> positions = player.getPositions();
-
-                positions = EnumPositions.values();
-
-                Log.d("POSITIONS", String.valueOf("----------------f-------------------"));
-
-                if(player.getPositions() != null)
-
-                for(int i = 0; i < player.getPositions().size(); i++)
-                    Log.d("POSITIONS", player.getPositions().get(i).toString());
-
-                Log.d("POSITIONS", String.valueOf("-----------------------------------"));
+                positions = player.getPositions();
 
 
                 TextView tv = new TextView(this);
@@ -157,7 +154,7 @@ public class EditTeamActivity extends AppCompatActivity {
                 tblLayout.addView(row);
             }
        }catch(Exception e){
-            Log.d("TABLESTUFF", e.getMessage());
+            e.printStackTrace();
         }
 
     }
@@ -175,7 +172,6 @@ public class EditTeamActivity extends AppCompatActivity {
                 currentMatch.addToTeamB(p);
                 currentMatch.removeFromTeamA(p);
                 break;
-
         }
     }
 /*
