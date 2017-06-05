@@ -35,6 +35,7 @@ public class ControllerMatch extends AsyncTask<Object, Void, Object> {
         gson = new Gson();
 
         try{
+            /*Wutti*/
             if(command[0].equals("POST")){
                 if(command[1].equals("/match")){
                     String newMatch = gson.toJson(command[2]);

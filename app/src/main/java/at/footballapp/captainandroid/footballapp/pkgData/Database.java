@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerMatch;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerOccupation;
+import at.footballapp.captainandroid.footballapp.pkgController.ControllerParticipation;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
 import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 
@@ -24,8 +25,8 @@ import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
-    //private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
+    //private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
+    private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
     private ArrayList<Occupation> occupations = null;
@@ -73,9 +74,10 @@ public class Database {
         matches.add(m);
         setCurrentMatch(m);
 
-        if(!(controllerMatch.get()).equals("200")){
+        /*if(!(controllerMatch.get()).equals("200")){
+            Log.d("ERRORMATCH", controllerMatch.get().toString());
             throw new Exception("Webservice problem --add match");
-        }
+        }*/
     }
 
     public void addPlayer(Player player)throws Exception{
@@ -145,6 +147,24 @@ public class Database {
             throw new Exception("webservice problem --removeOccupation");
         }
 
+    }
+
+    public void addOrUpdateParticipation(Match m, boolean firstTime) throws Exception{
+        ControllerParticipation controllerPart = new ControllerParticipation();
+
+        Object paras[] = new Object[5];
+
+        if(firstTime){
+            paras[0] = "POST";
+            paras[1] = "/participation";
+            paras[2] = m;
+        }else{
+            paras[0] = "PUT";
+            paras[1] = "/participation";
+            paras[2] = m;
+        }
+
+        controllerPart.execute(paras);
     }
 
     //TODO: implement getMatch

@@ -45,7 +45,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
 
     //todo figure out a smart way of doing this
         try{
-            if((this.getIntent().getExtras().getString("ADDMATCH")).equals("ADDMATCH"));
+            if((this.getIntent().getExtras().getString("ADDMATCH")).equals("ADDMATCH"))
             isAdd = true;
         }catch (Exception e){
             //noException
@@ -67,7 +67,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
     }
 
     private void prepare(){
-
+        /*Wutti*/
         if(isAdd){
             btnEditTeam.setVisibility(View.GONE);
             btnStatistic.setVisibility(View.GONE);
@@ -88,6 +88,7 @@ public class UpdateMatchActivity extends AppCompatActivity {
     }
 
     public void onBtnSave(View view){
+        /*author: Wutti*/
         if(isAdd){
 
             java.sql.Date dateOfMatch = null;
@@ -134,21 +135,6 @@ public class UpdateMatchActivity extends AppCompatActivity {
     }
 
     private void displayDateIsInTheFutureError(java.sql.Date dateWhichIsInTheFuture) throws Exception{
-
-       /* AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogButtonTheme);
-
-        builder.setMessage(String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one."));
-
-        builder.setPositiveButton(String.valueOf("Ok"), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-        });
-        */
         Toast.makeText(this,String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one.") , Toast.LENGTH_SHORT).show();
-
-        /*AlertDialog dialog  = builder.create();
-        dialog.show();
-        */
     }
 }
