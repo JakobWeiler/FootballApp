@@ -15,6 +15,7 @@ import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
 
+/*Weiler*/
 public class RemovePlayerActivity extends AppCompatActivity {
     private Database db = null;
 

@@ -13,6 +13,7 @@ import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
 import at.footballapp.captainandroid.footballapp.pkgMisc.EnumPositions;
 
+/*Weiler*/
 public class ProfileActivity extends AppCompatActivity {
     private Database db = null;
     private Player player = null;

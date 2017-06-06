@@ -2,10 +2,7 @@ package at.footballapp.captainandroid.footballapp.pkgData;
 
 import java.io.Serializable;
 
-/**
- * Created by Jakob on 18.05.2017.
- */
-
+/*Weiler*/
 public class Occupation implements Serializable {
     private int playerId = 0;
     private String positionName = null;

@@ -8,7 +8,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#262020</item>
-        <item name="colorPrimaryDark">#262020</item>
+       <item name="colorPrimaryDark">#262020</item>
         <item name="colorAccent">#FFFFFF</item>
     </style>
 
@@ -40,5 +40,8 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="listView" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 
 </resources>
