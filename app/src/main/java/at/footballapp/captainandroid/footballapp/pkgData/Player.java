@@ -136,6 +136,7 @@ public class Player implements Serializable{
         return positions;
     }
 
+    /*Weiler*/
     public void addPosition(String positionName, boolean calledFromGet) throws Exception {
         if (!positions.contains(EnumPositions.valueOf(positionName))) {
             if (!calledFromGet) {
@@ -145,6 +146,7 @@ public class Player implements Serializable{
         }
     }
 
+    /*Weiler*/
     public void removePosition(String positionName) throws Exception {
         if (positions.contains(EnumPositions.valueOf(positionName))) {
             Database.newInstance().removeOccupation(this.id, positionName);
@@ -152,6 +154,7 @@ public class Player implements Serializable{
         }
     }
 
+    /*Weiler*/
     public void resetPositions() throws Exception {
         removePosition("Goalkeeper");
         removePosition("Defender");

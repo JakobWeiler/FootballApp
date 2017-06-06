@@ -12,6 +12,7 @@ import java.util.EventListener;
 import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 
+/*Weiler*/
 public class RemoveDialogActivity extends Activity {
     Database db = null;
 
