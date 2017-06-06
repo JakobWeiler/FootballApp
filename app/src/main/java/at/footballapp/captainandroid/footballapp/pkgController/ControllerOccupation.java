@@ -15,10 +15,7 @@ import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by Jakob on 18.05.2017.
- */
-
+/*Weiler*/
 public class ControllerOccupation extends AsyncTask<Object, Void, String> {
     private static final String URL = Database.getUrl();
     private Gson gson;
