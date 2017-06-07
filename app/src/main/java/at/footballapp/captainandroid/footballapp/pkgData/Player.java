@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package at.footballapp.captainandroid.footballapp.pkgData;
 
 import com.google.gson.Gson;
@@ -13,10 +9,6 @@ import java.util.HashMap;
 
 import at.footballapp.captainandroid.footballapp.pkgMisc.EnumPositions;
 
-/**
- *
- * @author schueler
- */
 public class Player implements Serializable{
     
     private int id;

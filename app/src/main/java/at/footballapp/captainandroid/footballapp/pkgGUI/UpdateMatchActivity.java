@@ -1,10 +1,9 @@
 package at.footballapp.captainandroid.footballapp.pkgGUI;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,15 +22,13 @@ import at.footballapp.captainandroid.footballapp.pkgData.Player;
 import at.footballapp.captainandroid.footballapp.pkgHelp.SqlDateHelper;
 
 public class UpdateMatchActivity extends AppCompatActivity {
-
-
     private boolean isAdd = false;
     private DatePicker dpDatePicker = null;
     private Button btnStatistic = null;
     private Button btnEditTeam = null;
     private Button btnSave = null;
-    private EditText etScoreTeam1 = null;
-    private EditText etScoreTeam2 = null;
+    private EditText txtScoreTeam1 = null;
+    private EditText txtScoreTeam2 = null;
     private TextView tvScoreTeam1 = null;
     private TextView tvScoreTeam2 = null;
     private Database db = null;
@@ -43,16 +40,17 @@ public class UpdateMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_match);
 
-    //todo figure out a smart way of doing this
+    //TODO: figure out a smart way of doing this
         try{
             if((this.getIntent().getExtras().getString("ADDMATCH")).equals("ADDMATCH"))
             isAdd = true;
         }catch (Exception e){
-            //noException
+            Log.d("exception", e.getMessage());
         }
+
         getViews();
         db = Database.newInstance();
-        prepare();
+        initOthers();
     }
 
     private void getViews(){
@@ -60,19 +58,18 @@ public class UpdateMatchActivity extends AppCompatActivity {
         this.btnSave = (Button)findViewById(R.id.btnSave);
         this.btnStatistic = (Button) findViewById(R.id.btnStatistic);
         this.dpDatePicker = (DatePicker) findViewById(R.id.datePicker);
-        this.etScoreTeam1 = (EditText) findViewById(R.id.editText3);
-        this.etScoreTeam2 = (EditText) findViewById(R.id.editText4);
+        this.txtScoreTeam1 = (EditText) findViewById(R.id.txtScore1);
+        this.txtScoreTeam2 = (EditText) findViewById(R.id.txtScore2);
         this.tvScoreTeam1 = (TextView) findViewById(R.id.textView);
         this.tvScoreTeam2 = (TextView) findViewById(R.id.textView2);
     }
 
-    private void prepare(){
-        /*Wutti*/
+    private void initOthers(){
         if(isAdd){
             btnEditTeam.setVisibility(View.GONE);
             btnStatistic.setVisibility(View.GONE);
-            etScoreTeam1.setVisibility(View.GONE);
-            etScoreTeam2.setVisibility(View.GONE);
+            txtScoreTeam1.setVisibility(View.GONE);
+            txtScoreTeam2.setVisibility(View.GONE);
             tvScoreTeam1.setVisibility(View.GONE);
             tvScoreTeam2.setVisibility(View.GONE);
             btnSave.setText("add");
@@ -88,11 +85,9 @@ public class UpdateMatchActivity extends AppCompatActivity {
     }
 
     public void onBtnSave(View view){
-        /*author: Wutti*/
+        java.sql.Date dateOfMatch = getDateOfMatch();
+
         if(isAdd){
-
-            java.sql.Date dateOfMatch = null;
-
             Calendar dateOfCurrentMatch = Calendar.getInstance();
 
             dateOfCurrentMatch.set(Calendar.DAY_OF_MONTH, dpDatePicker.getDayOfMonth());
@@ -102,11 +97,8 @@ public class UpdateMatchActivity extends AppCompatActivity {
 
             try{dateOfMatch = SqlDateHelper.getDate((dateOfCurrentMatch.get(Calendar.DAY_OF_MONTH)+"-"+dateOfCurrentMatch.get(Calendar.MONTH)+"-"+dateOfCurrentMatch.get(Calendar.YEAR)));}catch(Exception e){/*there is literally no fucking way we get an exception here*/}
 
-
             //Calendar Stuff
-
             Calendar calendar = Calendar.getInstance();
-
             Date today = calendar.getTime();
 
             calendar.set(Calendar.DAY_OF_MONTH, dpDatePicker.getDayOfMonth());
@@ -130,11 +122,47 @@ public class UpdateMatchActivity extends AppCompatActivity {
             }
 
         }else{
-            //todo
+            //set dateOfMatch in spinner
+            Match currMatch = db.getCurrentMatch();
+
+            currMatch.setGoalsA(Integer.parseInt(txtScoreTeam1.getText().toString()));
+            currMatch.setGoalsB(Integer.parseInt(txtScoreTeam2.getText().toString()));
+
+            Calendar dateOfCurrentMatch = Calendar.getInstance();
+
+            dateOfCurrentMatch.set(Calendar.DAY_OF_MONTH, dpDatePicker.getDayOfMonth());
+            dateOfCurrentMatch.set(Calendar.MONTH, dpDatePicker.getMonth());
+            dateOfCurrentMatch.set(Calendar.YEAR, dpDatePicker.getYear());
+            dateOfCurrentMatch.add(Calendar.MONTH, 1);
+
+            try{
+                dateOfMatch = SqlDateHelper.getDate((dateOfCurrentMatch.get(Calendar.DAY_OF_MONTH)+"-"+dateOfCurrentMatch.get(Calendar.MONTH)+"-"+dateOfCurrentMatch.get(Calendar.YEAR)));
+                currMatch.setFirmDate(SqlDateHelper.dateToString(dateOfMatch));
+                db.updateMatch(currMatch);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+            startActivity(new Intent(UpdateMatchActivity.this, MainActivity.class));
         }
     }
 
     private void displayDateIsInTheFutureError(java.sql.Date dateWhichIsInTheFuture) throws Exception{
         Toast.makeText(this,String.valueOf("The date: " + SqlDateHelper.dateToString(dateWhichIsInTheFuture) + " is in the future. Hence, you have to choose a different one.") , Toast.LENGTH_SHORT).show();
+    }
+
+    private java.sql.Date getDateOfMatch(){
+        java.sql.Date dateOfMatch = null;
+
+        Calendar dateOfCurrentMatch = Calendar.getInstance();
+
+        dateOfCurrentMatch.set(Calendar.DAY_OF_MONTH, dpDatePicker.getDayOfMonth());
+        dateOfCurrentMatch.set(Calendar.MONTH, dpDatePicker.getMonth());
+        dateOfCurrentMatch.set(Calendar.YEAR, dpDatePicker.getYear());
+        dateOfCurrentMatch.add(Calendar.MONTH, 1);
+
+        try{dateOfMatch = SqlDateHelper.getDate((dateOfCurrentMatch.get(Calendar.DAY_OF_MONTH)+"-"+dateOfCurrentMatch.get(Calendar.MONTH)+"-"+dateOfCurrentMatch.get(Calendar.YEAR)));}catch(Exception e){/*there is literally no fucking way we get an exception here*/}
+
+        return dateOfMatch;
     }
 }

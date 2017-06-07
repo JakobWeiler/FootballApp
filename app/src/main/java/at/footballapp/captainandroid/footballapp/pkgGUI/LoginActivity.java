@@ -14,7 +14,7 @@ import android.widget.Toast;
 import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
-
+/*Lagger*/
 public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText txtUser;
@@ -25,22 +25,22 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_login);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        txtUser = (EditText) findViewById(R.id.txtUser);
+        txtPasswd = (EditText) findViewById(R.id.txtPassword);
+
         if (getIntent().getBooleanExtra("EXIT", false)) {
             finish();
         }
 
         try {
-            Database.newInstance().authUser(new Player(txtUser.getText().toString(), txtPasswd.getText().toString()));
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            if(Database.newInstance().authUser(new Player(txtUser.getText().toString(), txtPasswd.getText().toString()))){
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        setContentView(R.layout.activity_login);
-
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        txtUser = (EditText) findViewById(R.id.txtUser);
-        txtPasswd = (EditText) findViewById(R.id.txtPassword);
     }
 
     public void onBtnLogin(View view) {

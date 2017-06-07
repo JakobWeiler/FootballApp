@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.EventListener;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
 import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
-
+/*Lagger*/
 public class AddPlayerActivity extends Activity {
 
     public interface OnPlayerAddedListener extends EventListener {
@@ -39,7 +40,6 @@ public class AddPlayerActivity extends Activity {
     }
 
     public void onBtnConfirm(View view) {
-
         //Database.newInstance().addPlayer(new Player());
         EditText txtUsername = (EditText) (findViewById(R.id.username));
         EditText txtPassword = (EditText) (findViewById(R.id.password));

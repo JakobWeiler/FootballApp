@@ -16,14 +16,10 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
-
-/**
- * Auhtor: Pascal
- * Date: 03.05.2017
- */
-
+/*Lagger - all but delete*/
 public class ControllerPlayer extends AsyncTask<Object, Void, String> {
     private static final String URL = Database.getUrl();
+    private static final String contentType = Database.getContentType();
     private Gson gson;
 
     @Override
@@ -42,8 +38,8 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     url = new URL(URL + command[1]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setDoOutput(true);
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestMethod(command[0].toString());
+                    urlConnection.setRequestProperty("Content-Type", contentType);
 
                     byte[] outputBytes = newPlayer.getBytes("UTF-8");
                     urlConnection.setRequestProperty("Content-Length", Integer.toString(outputBytes.length));
@@ -70,8 +66,8 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                     url = new URL(URL + command[1]);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setDoOutput(true);
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestMethod(command[0].toString());
+                    urlConnection.setRequestProperty("Content-Type", contentType);
 
                     byte[] outputBytes = newPlayer.getBytes("UTF-8");
                     urlConnection.setRequestProperty("Content-Length", Integer.toString(outputBytes.length));
@@ -98,7 +94,7 @@ public class ControllerPlayer extends AsyncTask<Object, Void, String> {
                 url = new URL(URL + command[1] + "?id=" + command[2]);
 
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("DELETE");
+                urlConnection.setRequestMethod(command[0].toString());
 
                 response = Integer.toString(urlConnection.getResponseCode());
 
