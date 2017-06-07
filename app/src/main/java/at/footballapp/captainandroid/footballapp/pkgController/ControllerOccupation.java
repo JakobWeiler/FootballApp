@@ -57,6 +57,7 @@ public class ControllerOccupation extends AsyncTask<Object, Void, String> {
                 urlConnection.setRequestMethod("DELETE");
 
                 response = Integer.toString(urlConnection.getResponseCode());
+                urlConnection.disconnect();
 
             } else if (command[0].equals("GET")) {
                 url = new URL(URL + command[1]);
