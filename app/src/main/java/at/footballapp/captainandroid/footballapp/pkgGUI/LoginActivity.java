@@ -14,7 +14,7 @@ import android.widget.Toast;
 import at.footballapp.captainandroid.footballapp.R;
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 import at.footballapp.captainandroid.footballapp.pkgData.Player;
-/*Lagger*/
+/*Lagger */
 public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText txtUser;
