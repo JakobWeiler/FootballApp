@@ -16,13 +16,9 @@ import java.net.URLConnection;
 
 import at.footballapp.captainandroid.footballapp.pkgData.Database;
 
-/**
- * Auhtor: Pascal
- * Date: 03.05.2017
- */
-
-public class ControllerMatch extends AsyncTask<Object, Void, Object> {
+public class ControllerMatch extends AsyncTask<Object, Void, String> {
     private static final String URL = Database.getUrl();
+    private static final String contentType = Database.getContentType();
     private Gson gson = null;
 
     @Override
@@ -44,8 +40,8 @@ public class ControllerMatch extends AsyncTask<Object, Void, Object> {
 
                     HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
                     urlConnection.setDoOutput(true);
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestMethod(command[0].toString());
+                    urlConnection.setRequestProperty("Content-Type", contentType);
 
                     byte[] outputBytes = newMatch.getBytes("UTF-8");
                     urlConnection.setRequestProperty("Content-Length", Integer.toString(outputBytes.length));
@@ -65,11 +61,27 @@ public class ControllerMatch extends AsyncTask<Object, Void, Object> {
                     os.flush();
                     os.close();
                     urlConnection.disconnect();
-           }else{
+                }else{
 
                 }
-            }else{
+            /*Lagger*/
+            }else if(command[0].equals("PUT")){
+                if(command[1].equals("/match")){
+                    String updatedMatch = gson.toJson(command[2]);
+                    url = new URL(URL + command[1]);
 
+                    HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setRequestMethod(command[0].toString());
+                    urlConnection.setRequestProperty("Content-Type", contentType);
+
+                    byte[] outputBytes = updatedMatch.getBytes("UTF-8");
+                    urlConnection.setRequestProperty("Content-Length", Integer.toString(outputBytes.length));
+                    OutputStream os = urlConnection.getOutputStream();
+                    os.write(outputBytes);
+
+                    response = Integer.toString(urlConnection.getResponseCode());
+                }
             }
         } catch(Exception ex){
             ex.printStackTrace();

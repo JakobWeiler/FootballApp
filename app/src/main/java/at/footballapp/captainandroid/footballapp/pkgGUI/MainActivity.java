@@ -2,6 +2,7 @@ package at.footballapp.captainandroid.footballapp.pkgGUI;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -35,8 +36,9 @@ import at.footballapp.captainandroid.footballapp.pkgData.Player;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RemoveDialogActivity.OnPlayerRemovedListener, AddPlayerActivity.OnPlayerAddedListener {
 
-    ControllerPlayer controller = null;
-    Database db = null;
+    private ControllerPlayer controller = null;
+    private Database db = null;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,18 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         db = Database.newInstance();
+        sp = getSharedPreferences("footballApp", MODE_PRIVATE);
+        String uname = sp.getString("uname", null);
+        String passwd = sp.getString("passwd", null);
+
+        if(uname != null){
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("uname", uname);
+            editor.putString("passwd", passwd);
+            Log.d("output","SET");
+        } else {
+            Log.d("output", "logged in");
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,10 +72,10 @@ public class MainActivity extends AppCompatActivity
 
 
         Spinner spMatch = (Spinner) findViewById(R.id.spMatch);
-        ArrayList<String> match = new ArrayList<String>();
+        ArrayList<String> match = new ArrayList<>();
         match.add("Match");
         match.add("Some matches");
-        ArrayAdapter<String> adapterMatch = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapterMatch = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 match
@@ -83,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setAdapterSpinnerPlayer() {
         Spinner spPlayer = (Spinner) findViewById(R.id.spPlayer);
-        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<Player>(
+        ArrayAdapter<Player> adapterPlayer = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 db.getAllPlayers()

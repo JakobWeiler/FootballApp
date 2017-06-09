@@ -1,21 +1,16 @@
 package at.footballapp.captainandroid.footballapp.pkgData;
 
-import android.content.SharedPreferences;
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.concurrent.ExecutionException;
 
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerMatch;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerOccupation;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerParticipation;
 import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
-import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 
 /**
  * Auhtor: Pascal
@@ -25,6 +20,7 @@ import at.footballapp.captainandroid.footballapp.pkgGUI.MainActivity;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
+    private static final String ContentType = "application/json";
     private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice_NEW/resources";
     //private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice_NEW/resources";
     private Gson gson;
@@ -34,7 +30,6 @@ public class Database {
     private ControllerOccupation controllerOccupation = null;
     private ArrayList<Match> matches = null;
     private ControllerMatch controllerMatch = null;
-    private SharedPreferences sp;
     private Match currentMatch = null;
 
     public static Database newInstance(){
@@ -47,12 +42,13 @@ public class Database {
 
     private Database(){
         gson = new Gson();
-        matches = new ArrayList<Match>();
+        matches = new ArrayList<>();
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
+    //TODO: implement addMatch
+    /*public void addMatch(Match match){
+        matches.add(match);
+    }*/
 
     public void addMatch(Match match) throws Exception{
         controllerMatch = new ControllerMatch();
@@ -75,6 +71,26 @@ public class Database {
         }*/
     }
 
+    /*Lagger*/
+    public void updateMatch(Match m) throws Exception{
+        controllerMatch = new ControllerMatch();
+
+        Object paras[] = new Object[3];
+        paras[0] = "PUT";
+        paras[1] = "/match";
+        paras[2] = m;
+
+        controllerMatch.execute(paras);
+
+        if(!(controllerMatch.get()).equals("200")){
+            throw new Exception("Webservice problem --update match");
+        } else {
+            matches.remove(m);
+            matches.add(m);
+        }
+    }
+
+    /*Lagger*/
     public void addPlayer(Player player)throws Exception{
 
         controllerPlayer = new ControllerPlayer();
@@ -87,11 +103,7 @@ public class Database {
         controllerPlayer.execute(paras);
         //Method, URL, value, ...(parametersQuery)
 
-        if(!(controllerPlayer.get()).equals("200")){
-            throw new Exception("webservice problem --addPlayer");
-        }
-
-        allPlayers.add(player);
+        allPlayers.add(gson.fromJson(controllerPlayer.get(), Player.class));
     }
 
     /*Weiler*/
@@ -208,6 +220,7 @@ public class Database {
             }
         });
 
+
         t.start();
         t.join();
 
@@ -252,9 +265,10 @@ public class Database {
         }
     }
 
+    /*Lagger*/
     public boolean authUser(Player p)throws Exception{
         controllerPlayer = new ControllerPlayer();
-        Log.d("output", p.toString());
+
         Object paras[] = new Object[3];
         paras[0] = "POST";
         paras[1] = "/player/auth";
@@ -274,11 +288,19 @@ public class Database {
         return allPlayers.contains(new Player(name));
     }
 
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+
     public static String getUrl(){
         return URL;
     }
 
-    public void setCurrentMatch(Match match){currentMatch = match;}
+    private void setCurrentMatch(Match match){currentMatch = match;}
 
     public Match getCurrentMatch(){return currentMatch;}
+
+    public static String getContentType(){
+        return ContentType;
+    }
 }

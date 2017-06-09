@@ -103,30 +103,13 @@ public class Match implements Serializable{
 
         Match match = (Match) o;
 
-        if (getId() != match.getId()) return false;
-        if (getGoalsA() != match.getGoalsA()) return false;
-        if (getGoalsB() != match.getGoalsB()) return false;
-        if (getFirmDate() != null ? !getFirmDate().equals(match.getFirmDate()) : match.getFirmDate() != null)
-            return false;
-        if (getTeamA() != null ? !getTeamA().equals(match.getTeamA()) : match.getTeamA() != null)
-            return false;
-        return getTeamB() != null ? getTeamB().equals(match.getTeamB()) : match.getTeamB() == null;
+        return id == match.id;
 
     }
 
-    /**
-     * Automatically generated hashCode
-     * @return hashCode
-     */
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + (getFirmDate() != null ? getFirmDate().hashCode() : 0);
-        result = 31 * result + getGoalsA();
-        result = 31 * result + getGoalsB();
-        result = 31 * result + (getTeamA() != null ? getTeamA().hashCode() : 0);
-        result = 31 * result + (getTeamB() != null ? getTeamB().hashCode() : 0);
-        return result;
+        return id;
     }
 
     @Override

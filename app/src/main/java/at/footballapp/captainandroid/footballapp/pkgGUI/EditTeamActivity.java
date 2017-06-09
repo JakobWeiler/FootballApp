@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,7 +49,6 @@ public class EditTeamActivity extends AppCompatActivity {
         db = Database.newInstance();
         firstTime = true;
 
-
         initViews();
         initOthers();
         doTableStuff();
@@ -78,12 +78,16 @@ public class EditTeamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    db.addOrUpdateParticipation(db.getCurrentMatch(), firstTime);
+                    if(db.getCurrentMatch().getTeamA().size() > 0 && db.getCurrentMatch().getTeamB().size() > 0){
+                        db.addOrUpdateParticipation(db.getCurrentMatch(), firstTime);
+                        Intent intent = new Intent(EditTeamActivity.this, UpdateMatchActivity.class);
+                        startActivity(intent);
+                    }else{
+                         Toast.makeText(getApplicationContext() ,String.valueOf("Every team must consist of at least one player") , Toast.LENGTH_SHORT).show();
+                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(EditTeamActivity.this, UpdateMatchActivity.class);
-                startActivity(intent);
             }
         });
 
