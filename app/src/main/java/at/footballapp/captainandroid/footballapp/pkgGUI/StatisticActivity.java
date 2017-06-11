@@ -11,17 +11,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import at.footballapp.captainandroid.footballapp.R;
 
 public class StatisticActivity extends AppCompatActivity {
+
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -68,6 +76,51 @@ public class StatisticActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        private ImageView imgViewGoalshot = null;
+        private ImageView imgViewHeadgoal = null;
+        private ImageView imgViewHeadgoalSnow = null;
+        private ImageView imgViewNutmeg = null;
+        private ImageView imgViewOwnGoal = null;
+        private ImageView imgViewPenalty = null;
+
+        private void getViews(){
+            this.imgViewGoalshot = (ImageView)getActivity().findViewById(R.id.imgViewGoalshot);
+            this.imgViewHeadgoal = (ImageView)getActivity().findViewById(R.id.imgViewHeadgoal);
+            this.imgViewHeadgoalSnow = (ImageView)getActivity().findViewById(R.id.imgViewHeadgoalSnow);
+            this.imgViewNutmeg = (ImageView)getActivity().findViewById(R.id.imgViewNutmeg);
+            this.imgViewOwnGoal = (ImageView)getActivity().findViewById(R.id.imgViewOwnGoal);
+            this.imgViewPenalty = (ImageView)getActivity().findViewById(R.id.imgViewPenalty);
+        }
+/*
+        public void onImgViewCick(View view) {
+                Toast t = new Toast(getActivity());
+
+            try{
+                if(getActivity().findViewById(R.id.imgViewGoalshot)==view) {
+                    t = Toast.makeText(getContext(), "Goals scored", Toast.LENGTH_LONG);
+                }
+                else if(getActivity().findViewById(R.id.imgViewPenalty)==view) {
+                    t = Toast.makeText(getActivity(), "Penalty goals", Toast.LENGTH_LONG);
+                }
+                else if(getActivity().findViewById(R.id.imgViewHeadgoal)==view) {
+                    t = Toast.makeText(getActivity().getApplicationContext(), "Header goals", Toast.LENGTH_LONG);
+                }
+                else if(getActivity().findViewById(R.id.imgViewHeadgoalSnow)==view) {
+                    t = Toast.makeText(getActivity().getApplicationContext(), "Header goals snow", Toast.LENGTH_LONG);
+                }
+                else if(getActivity().findViewById(R.id.imgViewOwnGoal)==view) {
+                    t = Toast.makeText(getActivity().getApplicationContext(), "Own goals", Toast.LENGTH_LONG);
+                }
+                else if(getActivity().findViewById(R.id.imgViewNutmeg)==view) {
+                    t = Toast.makeText(getActivity().getApplicationContext(), "Nutmegs", Toast.LENGTH_LONG);
+                }
+                t.show();
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+*/
         public PlaceholderFragment() {
         }
 
@@ -87,8 +140,6 @@ public class StatisticActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_statistic, container, false);
-            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -126,5 +177,9 @@ public class StatisticActivity extends AppCompatActivity {
             }
             return null;
         }
+
+
+
+
     }
 }

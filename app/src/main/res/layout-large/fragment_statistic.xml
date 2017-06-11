@@ -10,6 +10,84 @@
     tools:context="at.footballapp.captainandroid.footballapp.pkgGUI.StatisticActivity$PlaceholderFragment"
     style="@style/background">
 
+    <TableRow
+        android:id="@+id/tableRow"
+        android:layout_width="500dp"
+        android:layout_height="69dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtPlayer"
+            android:layout_width="95dp"
+            android:layout_height="65dp"
+            android:gravity="center"
+            android:text="@string/Player"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtPosition"
+            android:layout_width="50dp"
+            android:layout_height="65dp"
+            android:gravity="center"
+            android:text="Pos."
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imgViewGoalshot"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/ic_goalshot" />
+
+        <ImageView
+            android:id="@+id/imgViewHeadgoal"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/ic_headgoal" />
+
+        <ImageView
+            android:id="@+id/imgViewHeadgoalSnow"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/ic_headgoal_snow" />
+
+        <ImageView
+            android:id="@+id/imgViewNutmeg"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/ic_nutmeg" />
+
+        <ImageView
+            android:id="@+id/imgViewOwnGoal"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/ic_owngoal" />
+
+        <ImageView
+            android:id="@+id/imgViewPenalty"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/ic_penalty"
+            tools:layout_editor_absoluteX="273dp"
+            tools:layout_editor_absoluteY="25dp" />
+
+    </TableRow>
+
     <Button
         android:id="@+id/btnSave"
         style="@style/buttons"
@@ -26,68 +104,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
-        app:layout_constraintVertical_bias="0.556" />
+        app:layout_constraintVertical_bias="0.725" />
 
     <TableLayout
         android:id="@+id/tableLayout2"
-        android:layout_width="459dp"
-        android:layout_height="450dp"
+        android:layout_width="500dp"
+        android:layout_height="454dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteX="37dp"
         tools:layout_editor_absoluteY="99dp">
 
     </TableLayout>
-
-    <TableRow
-        android:id="@+id/tableRow"
-        android:layout_width="459dp"
-        android:layout_height="64dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="31dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imgViewGoalshot"
-            android:layout_width="75dp"
-            android:layout_height="64dp"
-            app:srcCompat="@mipmap/ic_goalshot" />
-
-        <ImageView
-            android:id="@+id/imgViewHeadgoal"
-            android:layout_width="75dp"
-            android:layout_height="64dp"
-            app:srcCompat="@mipmap/ic_headgoal" />
-
-        <ImageView
-            android:id="@+id/imgViewHeadgoalSnow"
-            android:layout_width="75dp"
-            android:layout_height="64dp"
-            app:srcCompat="@mipmap/ic_headgoal_snow" />
-
-        <ImageView
-            android:id="@+id/imgViewNutmeg"
-            android:layout_width="75dp"
-            android:layout_height="64dp"
-            app:srcCompat="@mipmap/ic_nutmeg" />
-
-        <ImageView
-            android:id="@+id/imgViewOwnGoal"
-            android:layout_width="75dp"
-            android:layout_height="64dp"
-            app:srcCompat="@mipmap/ic_owngoal" />
-
-        <ImageView
-            android:id="@+id/imgViewPenalty"
-            android:layout_width="75dp"
-            android:layout_height="64dp"
-            app:srcCompat="@mipmap/ic_penalty"
-             />
-
-    </TableRow>
 
 </android.support.constraint.ConstraintLayout>
