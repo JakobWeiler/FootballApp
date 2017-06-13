@@ -20,9 +20,9 @@ import at.footballapp.captainandroid.footballapp.pkgController.ControllerPlayer;
 public class Database {
     private Player currentPlayer = null;
     private static Database singletonDB = null;
-    private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice/resources";
-    //private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice/resources";
     private static final String ContentType = "application/json";
+    private static final String URL = "http://212.152.179.116:8080/Soccer_Webservice_NEW/resources";
+    //private static final String URL = "http://192.168.142.143:8080/Soccer_Webservice_NEW/resources";
     private Gson gson;
     private ArrayList<Player> allPlayers = null;
     private ArrayList<Occupation> occupations = null;
@@ -106,6 +106,7 @@ public class Database {
         allPlayers.add(gson.fromJson(controllerPlayer.get(), Player.class));
     }
 
+    /*Weiler*/
     public void removePlayer(int id, String name) throws Exception {
         controllerPlayer = new ControllerPlayer();
 

@@ -1,0 +1,5 @@
+Designen der Mockups bevor die eigentliche GUI-Erstellung begonnen hat.
+Alle GUIs erstellt und das GUI layout(hintergrund etc.) gemacht.
+Styles (Formatierung) der Buttons, TextViews..
+Verknüpfung der einzelnen GUIs (mit Buttons).
+Zweites layout (layout-larger) für Tablet erstellt und die GUIs auf die Screengröße angepasst.
