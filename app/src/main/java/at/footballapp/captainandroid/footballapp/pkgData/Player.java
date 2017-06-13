@@ -1,6 +1,8 @@
 
 package at.footballapp.captainandroid.footballapp.pkgData;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.Gson;
 
 import java.io.Serializable;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 
 import at.footballapp.captainandroid.footballapp.pkgMisc.EnumPositions;
 
-public class Player implements Serializable{
+public class Player implements Serializable, Comparable{
     
     private int id;
     private String name;
@@ -172,5 +174,10 @@ public class Player implements Serializable{
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return getName().compareTo(((Player)o).getName());
     }
 }
